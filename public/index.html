@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -408,9 +408,9 @@
             <div class="absolute inset-0 opacity-15 pointer-events-none animate-pulse" style="background-image: radial-gradient(circle at 50% 50%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
             
             <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-50">
-                <button onclick="toggleLanguage()" id="auth-lang-btn" class="w-10 h-10 bg-gradient-to-b from-[#ef4444] to-[#b91c1c] border-2 border-[#7f1d1d] rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-transform text-white font-black text-xs">EN</button>
+                <button onclick="toggleLanguage()" id="auth-lang-btn" class="w-10 h-10 bg-gradient-to-b from-[#ef4444] to-[#b91c1c] border-2 border-[#7f1d1d] rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-transform text-white font-black text-xs">TR</button>
                 <button onclick="showHowItWorks()" class="bg-gradient-to-b from-[#ffe066] to-[#f59e0b] border-2 border-[#b47100] rounded-xl p-2 px-3 text-[#4a2610] font-black text-xs flex items-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform">
-                    <i class="fa-solid fa-circle-question"></i> <span data-i18n="howItWorks">Nasıl Çalışır?</span>
+                    <i class="fa-solid fa-circle-question"></i> <span data-i18n="howItWorks">How It Works?</span>
                 </button>
             </div>
 
@@ -418,8 +418,8 @@
                 <div class="wood-panel-title" data-i18n="title">ROBUX BIRDS</div>
                 
                 <div class="flex bg-[#2b1407]/40 p-1.5 rounded-xl border border-[#3c1e0a]">
-                    <button onclick="switchAuthTab('login')" id="tab-btn-login" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-white bg-[#8a4a20] border border-[#361807]" data-i18n="tabLogin">GİRİŞ YAP</button>
-                    <button onclick="switchAuthTab('signup')" id="tab-btn-signup" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-gray-400" data-i18n="tabSignup">KAYIT OL</button>
+                    <button onclick="switchAuthTab('login')" id="tab-btn-login" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-white bg-[#8a4a20] border border-[#361807]" data-i18n="tabLogin">LOGIN</button>
+                    <button onclick="switchAuthTab('signup')" id="tab-btn-signup" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-gray-400" data-i18n="tabSignup">REGISTER</button>
                     <button onclick="switchAuthTab('forgot')" id="tab-btn-forgot" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-gray-400" data-i18n="tabForgot">ŞİFREMİ UNUTTUM</button>
                 </div>
 
@@ -430,11 +430,11 @@
                     <div class="flex flex-col gap-3 wood-panel-inner p-3">
                         <div class="relative">
                             <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="login-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                            <input id="login-email" type="email" inputmode="email" autocomplete="email" placeholder="Email Address" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
                         </div>
                         <div class="relative">
                             <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="login-password" type="password" placeholder="Oyun Şifresi" data-i18n-placeholder="passwordPlh" class="premium-input text-sm">
+                            <input id="login-password" type="password" placeholder="Game Password" data-i18n-placeholder="passwordPlh" class="premium-input text-sm">
                         </div>
                     </div>
                     <button onclick="authLogin()" class="game-btn btn-primary text-md py-3 mt-1 shimmer">
@@ -449,40 +449,40 @@
                     <div class="flex flex-col gap-3 wood-panel-inner p-3">
                         <div class="relative">
                             <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="signup-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                            <input id="signup-email" type="email" inputmode="email" autocomplete="email" placeholder="Email Address" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
                         </div>
                         <div class="relative">
                             <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="signup-password" type="password" placeholder="Yeni Oyun Şifresi" data-i18n-placeholder="newPasswordPlh" class="premium-input text-sm">
+                            <input id="signup-password" type="password" placeholder="Yeni Game Password" data-i18n-placeholder="newPasswordPlh" class="premium-input text-sm">
                         </div>
                         <div class="relative">
                             <i class="fa-solid fa-user-plus absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="signup-referral" type="text" placeholder="Referans Kodu (İsteğe Bağlı)" data-i18n-placeholder="refCodePlh" class="premium-input text-sm">
+                            <input id="signup-referral" type="text" placeholder="Referral Code (Optional)" data-i18n-placeholder="refCodePlh" class="premium-input text-sm">
                         </div>
                     </div>
                     <button onclick="authSignup()" class="game-btn btn-success text-md py-3 mt-1 shimmer">
-                        <span data-i18n="registerBtn">KAYIT OL</span> <i class="fa-solid fa-user-check"></i>
+                        <span data-i18n="registerBtn">REGISTER</span> <i class="fa-solid fa-user-check"></i>
                     </button>
                 </div>
 
                 <div id="tab-content-forgot" class="auth-tab hidden flex flex-col gap-4 animate-fade-in">
                     <div class="text-center">
-                        <p class="text-[#fde0bd] font-bold text-xs" data-i18n="forgotSub">Kullanıcı adınızı girerek şifrenizi sıfırlayın.</p>
+                        <p class="text-[#fde0bd] font-bold text-xs" data-i18n="forgotSub">Enter your email address to reset your password.</p>
                     </div>
                     <div class="flex flex-col gap-3 wood-panel-inner p-3">
                         <div class="relative">
                             <i class="fa-solid fa-envelope-circle-check absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="forgot-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                            <input id="forgot-email" type="email" inputmode="email" autocomplete="email" placeholder="Email Address" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
                         </div>
                     </div>
                     <button onclick="authForgotPassword()" class="game-btn btn-wood text-md py-3 mt-1">
-                        <span data-i18n="resetBtn">ŞİFREYİ SIFIRLA</span> <i class="fa-solid fa-key"></i>
+                        <span data-i18n="resetBtn">RESET PASSWORD</span> <i class="fa-solid fa-key"></i>
                     </button>
                 </div>
 
                 <div class="bg-red-950/40 border-2 border-red-800/60 p-3 rounded-xl text-center">
-                    <p class="text-xs font-black text-red-200 uppercase tracking-wider" data-i18n="securityAlertTitle"><i class="fa-solid fa-shield-halved text-red-400 mr-1"></i> Şifre Güvenlik Uyarısı</p>
-                    <p class="text-[10px] text-red-300 font-bold mt-1" data-i18n="securityAlertText">Roblox şifreniz KESİNLİKLE istenmez! Sadece buradaki profiliniz için bağımsız bir şifre belirleyin.</p>
+                    <p class="text-xs font-black text-red-200 uppercase tracking-wider" data-i18n="securityAlertTitle"><i class="fa-solid fa-shield-halved text-red-400 mr-1"></i> Password Safety Warning</p>
+                    <p class="text-[10px] text-red-300 font-bold mt-1" data-i18n="securityAlertText">Your Roblox password is NEVER requested! Create an independent password only for this profile.</p>
                 </div>
             </div>
         </div>
@@ -514,7 +514,7 @@
                         <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i>
                         <span id="energy-timer">04:30:00</span>
                     </div>
-                    <button onclick="toggleLanguage()" id="game-lang-btn" class="w-12 h-8 bg-gradient-to-b from-[#ef4444] to-[#b91c1c] border-2 border-[#7f1d1d] rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-transform text-white font-extrabold text-xs">EN</button>
+                    <button onclick="toggleLanguage()" id="game-lang-btn" class="w-12 h-8 bg-gradient-to-b from-[#ef4444] to-[#b91c1c] border-2 border-[#7f1d1d] rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-transform text-white font-extrabold text-xs">TR</button>
                 </div>
             </header>
 
@@ -532,8 +532,8 @@
                     </div>
 
                     <div id="sleep-warning-banner" class="hidden absolute left-1/2 -translate-x-1/2 bottom-2 z-40 w-full max-w-xs bg-amber-950/80 border-2 border-yellow-600 rounded-xl p-2.5 text-center text-white font-bold text-[11px] animate-pulse">
-                        <i class="fa-solid fa-moon text-yellow-400 mr-1"></i> <span data-i18n="birdsSleeping">Kuşlar yoruldu ve uykuya geçti! Devam etmek için yem verin.</span>
-                        <button onclick="wakeUpBirds()" class="bg-yellow-500 text-yellow-950 rounded p-1 px-3 mt-1.5 block mx-auto font-black text-[10px] border-b-2 border-yellow-700 active:scale-95 transition-all uppercase" data-i18n="wakeUpLabel">YEM VER & UYANDIR</button>
+                        <i class="fa-solid fa-moon text-yellow-400 mr-1"></i> <span data-i18n="birdsSleeping">Birds yoruldu ve uykuya geçti! Devam etmek için yem verin.</span>
+                        <button onclick="wakeUpBirds()" class="bg-yellow-500 text-yellow-950 rounded p-1 px-3 mt-1.5 block mx-auto font-black text-[10px] border-b-2 border-yellow-700 active:scale-95 transition-all uppercase" data-i18n="wakeUpLabel">FEED & WAKE UP</button>
                     </div>
 
                 </div>
@@ -546,32 +546,32 @@
 
                 <!-- WAREHOUSE VIEW (COLLECT FROM WAREHOUSE ONLY) -->
                 <div id="view-warehouse" class="view hidden flex flex-col items-center justify-center h-full min-h-[55vh] animate-fade-in relative">
-                    <h2 class="absolute top-0 text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] uppercase" data-i18n="warehouseTitle">Yumurta Deposu</h2>
+                    <h2 class="absolute top-0 text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] uppercase" data-i18n="warehouseTitle">Eggs Warehousesu</h2>
                     
                     <div class="relative w-full max-w-sm mt-12">
                         <div class="wood-panel text-center pt-12 pb-6 px-4 flex flex-col items-center gap-5">
                             <div class="absolute -top-14 text-8xl drop-shadow-2xl">🛖</div>
                             
                             <div class="bg-[#3e210d] border-4 border-[#2b1709] rounded-2xl w-full p-4 shadow-inner">
-                                <div class="text-[#fde0bd] font-bold text-xs mb-1 uppercase tracking-wider" data-i18n="uncollectedEggs">Depoda Biriken Yumurtalar</div>
+                                <div class="text-[#fde0bd] font-bold text-xs mb-1 uppercase tracking-wider" data-i18n="uncollectedEggs">Eggs Accumulated in Warehouse</div>
                                 <div class="text-4xl font-black text-white flex items-center justify-center gap-2">
                                     🥚 <span id="depo-uncollected">0</span>
                                 </div>
                             </div>
                             <button onclick="collectEggsFromWarehouse()" id="warehouse-collect-btn" class="game-btn btn-success w-full text-base">
-                                <i class="fa-solid fa-basket-shopping"></i> <span data-i18n="collectAllBtn">YUMURTALARI TOPLA</span>
+                                <i class="fa-solid fa-basket-shopping"></i> <span data-i18n="collectAllBtn">COLLECT EGGS</span>
                             </button>
-                            <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed px-2" data-i18n="warehouseCollectDesc">Kuşlarınızın ürettiği yumurtalar depoda birikir. Buradan yumurtaları hesabınıza toplayabilir, ardından Convert menüsünden gümüşe dönüştürebilirsiniz.</p>
+                            <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed px-2" data-i18n="warehouseCollectDesc">Birdsınızın ürettiği yumurtalar depoda birikir. Buradan yumurtaları hesabınıza toplayabilir, ardından Convert menüsünden gümüşe dönüştürebilirsiniz.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- TASKS VIEW -->
                 <div id="view-tasks" class="view hidden flex flex-col gap-4 pb-4 animate-fade-in">
-                    <h2 class="text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] text-center my-1 uppercase" data-i18n="tasksTitle">Altın Görevler</h2>
+                    <h2 class="text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] text-center my-1 uppercase" data-i18n="tasksTitle">Golden Quests</h2>
                     <div class="flex gap-2">
-                        <button onclick="switchTaskTab('daily')" id="task-tab-daily" class="game-btn btn-primary flex-1 !py-2 !px-0 text-xs" data-i18n="dailyTasks">Günlük</button>
-                        <button onclick="switchTaskTab('social')" id="task-tab-social" class="game-btn btn-wood flex-1 !py-2 !px-0 text-xs" data-i18n="socialTasks">Sosyal Medya</button>
+                        <button onclick="switchTaskTab('daily')" id="task-tab-daily" class="game-btn btn-primary flex-1 !py-2 !px-0 text-xs" data-i18n="dailyTasks">Daily</button>
+                        <button onclick="switchTaskTab('social')" id="task-tab-social" class="game-btn btn-wood flex-1 !py-2 !px-0 text-xs" data-i18n="socialTasks">Social Media</button>
                     </div>
                     <div id="task-list" class="flex flex-col gap-3 mt-2"></div>
                 </div>
@@ -582,29 +582,29 @@
             <nav class="h-24 bg-[#5c3a21] border-t-[8px] border-[#3b2210] absolute bottom-0 left-0 right-0 z-40 px-2 flex justify-between items-center shadow-[0_-10px_25px_rgba(0,0,0,0.5)]">
                 <div onclick="switchTab('shop')" id="nav-shop" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
                     <i class="fa-solid fa-store text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
-                    <span class="text-[10px] font-black mt-1" data-i18n="navShop">Mağaza</span>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navShop">Shop</span>
                 </div>
                 
                 <div onclick="switchTab('tasks')" id="nav-tasks" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
                     <i class="fa-solid fa-scroll text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
-                    <span class="text-[10px] font-black mt-1" data-i18n="navTasks">Görevler</span>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navTasks">Tasks</span>
                 </div>
 
                 <div onclick="switchTab('home')" id="nav-home" class="relative -top-6 flex flex-col items-center cursor-pointer">
                     <div id="nav-home-btn" class="center-nav-btn w-20 h-20 rounded-full flex items-center justify-center shadow-[0_8px_15px_rgba(0,0,0,0.6)] bg-gradient-to-b from-[#a16236] to-[#804823] border-4 border-[#4a2610] text-[#fde0bd] pulse-glow">
                         <i class="fa-solid fa-tree text-3xl"></i>
                     </div>
-                    <span class="text-xs font-black mt-2 drop-shadow-md text-[#fde0bd]" id="nav-home-text" data-i18n="navBirds">Kuşlar</span>
+                    <span class="text-xs font-black mt-2 drop-shadow-md text-[#fde0bd]" id="nav-home-text" data-i18n="navBirds">Birds</span>
                 </div>
 
                 <div onclick="switchTab('warehouse')" id="nav-warehouse" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
                     <i class="fa-solid fa-warehouse text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
-                    <span class="text-[10px] font-black mt-1" data-i18n="navWarehouse">Depo</span>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navWarehouse">Warehouse</span>
                 </div>
 
                 <div onclick="openMenu()" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
                     <i class="fa-solid fa-cubes text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
-                    <span class="text-[10px] font-black mt-1" data-i18n="navMenu">Menü</span>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navMenu">Menu</span>
                 </div>
             </nav>
 
@@ -617,7 +617,7 @@
                     </button>
                     
                     <div class="p-6 overflow-y-auto flex-1 flex flex-col gap-4 hide-scrollbar">
-                        <h2 class="text-3xl font-black text-white drop-shadow-md text-center mb-4 border-b-4 border-[#5a3215] pb-4" data-i18n="menuTitle">MENÜ</h2>
+                        <h2 class="text-3xl font-black text-white drop-shadow-md text-center mb-4 border-b-4 border-[#5a3215] pb-4" data-i18n="menuTitle">MENU</h2>
                         
                         <div id="menu-list" class="flex flex-col gap-3">
                             <!-- NEW CONVERT HUB BUTTON -->
@@ -629,38 +629,38 @@
 
                             <button onclick="openMenuPage('withdraw')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-green-500 shadow-inner text-xl"><i class="fa-solid fa-wallet"></i></div>
-                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuWithdraw">Robux Çek</span>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuWithdraw">Withdraw Robux</span>
                                 <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
                             </button>
 
                             <button onclick="openMenuPage('referral')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-yellow-500 shadow-inner text-xl"><i class="fa-solid fa-user-plus"></i></div>
-                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuRef">Referans Sistemi</span>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuRef">Referral System</span>
                                 <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
                             </button>
 
                             <button onclick="openMenuPage('history')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-gray-500 shadow-inner text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuHistory">İşlem Geçmişi</span>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuHistory">Transaction History</span>
                                 <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
                             </button>
 
                             <!-- ADMIN PANEL BUTTON (Protected by Email Logic) -->
                             <button id="btn-menu-admin" onclick="openMenuPage('admin')" class="hidden w-full items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-indigo-500 shadow-inner text-xl"><i class="fa-solid fa-user-gear"></i></div>
-                                <span class="flex-1 text-left text-lg tracking-wide text-indigo-300 group-hover:text-[#fec636] transition-colors" data-i18n="menuAdmin">Yönetici Paneli</span>
+                                <span class="flex-1 text-left text-lg tracking-wide text-indigo-300 group-hover:text-[#fec636] transition-colors" data-i18n="menuAdmin">Admin Paneli</span>
                                 <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
                             </button>
 
                             <button onclick="logout()" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group mt-4">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-red-500 shadow-inner text-xl"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                                <span class="flex-1 text-left text-lg tracking-wide text-red-400" data-i18n="menuLogout">Çıkış Yap</span>
+                                <span class="flex-1 text-left text-lg tracking-wide text-red-400" data-i18n="menuLogout">Logout</span>
                             </button>
                         </div>
 
                         <div id="menu-subpage" class="hidden flex-col h-full">
                             <button onclick="backToMenu()" class="text-[#fde0bd] font-bold flex items-center gap-2 mb-4 bg-[#5a3215] p-2 px-4 rounded-lg self-start active:scale-95">
-                                <i class="fa-solid fa-chevron-left"></i> <span data-i18n="backBtn">Geri</span>
+                                <i class="fa-solid fa-chevron-left"></i> <span data-i18n="backBtn">Back</span>
                             </button>
                             <div id="menu-content-area" class="flex-1 overflow-y-auto hide-scrollbar pr-1 pb-6"></div>
                         </div>
@@ -674,19 +674,19 @@
         <!-- HOW IT WORKS MODAL -->
         <div id="how-it-works-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/90 backdrop-blur-md p-6 animate-fade-in">
             <div class="wood-panel w-full max-w-sm p-6 flex flex-col gap-4 text-center">
-                <div class="wood-panel-title" data-i18n="howItWorksTitle">NASIL ÇALIŞIR?</div>
+                <div class="wood-panel-title" data-i18n="howItWorksTitle">HOW IT WORKS?</div>
                 <div class="text-5xl mt-4">📖</div>
                 <div class="text-white text-left font-bold text-xs tracking-wide leading-relaxed bg-[#3e210d] p-4 rounded-xl border border-[#261104] max-h-[300px] overflow-y-auto hide-scrollbar">
                     <ul class="list-disc pl-4 space-y-2 text-[#fde0bd]">
                         <li data-i18n="rule1"><strong>Kuş Satın Alın:</strong> Başlangıçta size verilen Gümüş (S) ile ilk kuşunuzu sahiplenin.</li>
-                        <li data-i18n="rule2"><strong>Yumurtaları Toplayın:</strong> Kuşların ürettiği yumurtalar Depoda birikir. Depodan toplayarak hesabınıza aktarın.</li>
-                        <li data-i18n="rule3"><strong>Gümüşe Çevirin:</strong> Menüdeki "Convert" sekmesinden yumurtalarınızı Gümüş'e çevirebilirsiniz. (100 Yumurta = 1 Gümüş)</li>
+                        <li data-i18n="rule2"><strong>Yumurtaları Toplayın:</strong> Birdsın ürettiği yumurtalar Warehouseda birikir. Warehousedan toplayarak hesabınıza aktarın.</li>
+                        <li data-i18n="rule3"><strong>Gümüşe Çevirin:</strong> Menudeki "Convert" sekmesinden yumurtalarınızı Gümüş'e çevirebilirsiniz. (100 Yumurta = 1 Gümüş)</li>
                         <li data-i18n="rule4"><strong>Robuxa Dönüştürün:</strong> Yine "Convert" kısmından topladığınız gümüşleri Robux'a (R$) dönüştürebilirsiniz. (100 Gümüş = 1 Robux)</li>
-                        <li data-i18n="rule5"><strong>Robux Çekin:</strong> Talep oluşturarak Roblox hesabınıza şifresiz transfer talebi gönderin!</li>
-                        <li data-i18n="rule6"><strong>Günlük Limit:</strong> Adil oyun dengesi için her oyuncu günde maksimum <strong>50 Robux</strong> çekebilir.</li>
+                        <li data-i18n="rule5"><strong>Withdraw Robux:</strong> Request secure payouts to your Roblox username password-free!</li>
+                        <li data-i18n="rule6"><strong>Daily Limit:</strong> Adil oyun dengesi için her oyuncu günde maksimum <strong>50 Robux</strong> çekebilir.</li>
                     </ul>
                 </div>
-                <button onclick="closeHowItWorks()" class="game-btn btn-primary w-full text-base" data-i18n="modalClose">TAMAM</button>
+                <button onclick="closeHowItWorks()" class="game-btn btn-primary w-full text-base" data-i18n="modalClose">OK</button>
             </div>
         </div>
 
@@ -696,14 +696,14 @@
                 <div class="wood-panel-title" id="modal-title">BİLDİRİM</div>
                 <div id="modal-icon" class="text-6xl mt-4">🎉</div>
                 <div id="modal-message" class="text-white font-bold text-sm tracking-wide leading-relaxed bg-[#3e210d] p-4 rounded-xl border border-[#261104]">Mesaj içeriği</div>
-                <button onclick="closeModal()" class="game-btn btn-primary w-full text-base" data-i18n="modalClose">TAMAM</button>
+                <button onclick="closeModal()" class="game-btn btn-primary w-full text-base" data-i18n="modalClose">OK</button>
             </div>
         </div>
 
     </div>
 
     <script>
-        let currentLang = 'TR';
+        let currentLang = 'EN';
         let currentActiveUser = localStorage.getItem('birds_current_user') || null;
         let sessionToken = localStorage.getItem('birds_session_token') || null;
         let currentTaskTab = 'daily';
@@ -780,7 +780,7 @@
         async function refreshState(silent = true) {
             if (!currentActiveUser || !sessionToken) return;
             try { applyServerPayload(await api('/api/me')); }
-            catch (err) { if (!silent) showModal('HATA', err.message, '❌'); }
+            catch (err) { if (!silent) showModal('ERROR', err.message, '❌'); }
         }
 
         window.onload = async function() {
@@ -797,7 +797,7 @@
                 } else {
                     document.getElementById('screen-auth').classList.remove('hidden');
                 }
-            } catch (err) { showModal('HATA', err.message, '❌'); }
+            } catch (err) { showModal('ERROR', err.message, '❌'); }
             translatePage();
         };
 
@@ -813,7 +813,7 @@
         async function authLogin() {
             const email = document.getElementById('login-email').value.trim().toLowerCase();
             const password = document.getElementById('login-password').value.trim();
-            if (!email || !password) return showModal('HATA', 'Lütfen e-posta ve şifre alanlarını doldurun!', '❌');
+            if (!email || !password) return showModal('ERROR', 'Please fill in email and password!', '❌');
             try {
                 applyServerPayload(await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }));
                 document.getElementById('screen-auth').classList.add('hidden');
@@ -821,29 +821,29 @@
                 document.getElementById('screen-game').classList.add('flex');
                 switchTab('home');
                 initGameCycle();
-            } catch (err) { showModal('GİRİŞ HATASI', err.message, '🔒'); }
+            } catch (err) { showModal('LOGIN ERROR', err.message, '🔒'); }
         }
 
         async function authSignup() {
             const email = document.getElementById('signup-email').value.trim().toLowerCase();
             const password = document.getElementById('signup-password').value.trim();
             const refCode = document.getElementById('signup-referral').value.trim().toLowerCase();
-            if (!email || !password) return showModal('HATA', 'Lütfen e-posta ve şifre girin!', '❌');
+            if (!email || !password) return showModal('ERROR', 'Please enter email and password!', '❌');
             try {
                 await api('/api/auth/signup', { method: 'POST', body: JSON.stringify({ email, password, refCode }) });
-                showModal('KAYIT BAŞARILI', 'Hesabınız oluşturuldu. Şimdi e-posta ve şifrenizle giriş yapabilirsiniz.', '🎉');
+                showModal('SIGNUP SUCCESSFUL', 'Your account was created. You can now log in with your email and password.', '🎉');
                 switchAuthTab('login');
                 document.getElementById('login-email').value = email;
-            } catch (err) { showModal('KAYIT HATASI', err.message, '❌'); }
+            } catch (err) { showModal('SIGNUP ERROR', err.message, '❌'); }
         }
 
         async function authForgotPassword() {
             const email = document.getElementById('forgot-email').value.trim().toLowerCase();
-            if (!email) return showModal('HATA', 'E-posta adresinizi girin!', '❌');
+            if (!email) return showModal('ERROR', 'Please enter your email address!', '❌');
             try {
                 const data = await api('/api/auth/forgot', { method: 'POST', body: JSON.stringify({ email }) });
-                showModal('ŞİFRE SIFIRLAMA', data.message, '🔑');
-            } catch (err) { showModal('HATA', err.message, '❌'); }
+                showModal('PASSWORD RESET', data.message, '🔑');
+            } catch (err) { showModal('ERROR', err.message, '❌'); }
         }
 
         function initGameCycle() {
@@ -885,8 +885,8 @@
         async function wakeUpBirds() {
             try {
                 applyServerPayload(await api('/api/energy/wake', { method: 'POST', body: '{}' }));
-                showModal('KUŞLAR BESLENDİ', 'Kuşlarınız 4.5 saat boyunca üretime devam edecek.', '⚡');
-            } catch (err) { showModal('HATA', err.message, '❌'); }
+                showModal('BIRDS FED', 'Your birds will continue producing for 4.5 hours.', '⚡');
+            } catch (err) { showModal('ERROR', err.message, '❌'); }
         }
 
         function logout() {
@@ -937,8 +937,8 @@
                 inputEl.value = '';
                 applyServerPayload(payload);
                 openMenuPage('convert');
-                showModal('DÖNÜŞÜM BAŞARILI', `${payload.converted} yumurta ${payload.received} gümüşe dönüştürüldü!`, '🪙');
-            } catch (err) { showModal('DÖNÜŞÜM HATASI', err.message, '❌'); }
+                showModal('CONVERSION SUCCESSFUL', `${payload.converted} eggs were converted into ${payload.received} Silver!`, '🪙');
+            } catch (err) { showModal('CONVERSION ERROR', err.message, '❌'); }
         }
 
         async function executeSilverToRobuxConvert() {
@@ -950,8 +950,8 @@
                 inputEl.value = '';
                 applyServerPayload(payload);
                 openMenuPage('convert');
-                showModal('DÖNÜŞÜM BAŞARILI', `${payload.converted} gümüş ${payload.received} Robux oldu!`, '💎');
-            } catch (err) { showModal('DÖNÜŞÜM HATASI', err.message, '❌'); }
+                showModal('CONVERSION SUCCESSFUL', `${payload.converted} Silver became ${payload.received} Robux!`, '💎');
+            } catch (err) { showModal('CONVERSION ERROR', err.message, '❌'); }
         }
 
         function updateEggConvertPreview() {
@@ -974,16 +974,16 @@
                 const payload = await api('/api/withdrawals', { method: 'POST', body: JSON.stringify({ amount, robloxUsername }) });
                 applyServerPayload(payload);
                 openMenuPage('withdraw');
-                showModal('KAYIT ALINDI', `Talebiniz kuyruğa alındı: @${robloxUsername}`, '💎');
-            } catch (err) { showModal('ÇEKİM HATASI', err.message, '❌'); }
+                showModal('REQUEST QUEUED', `Your request was queued: @${robloxUsername}`, '💎');
+            } catch (err) { showModal('WITHDRAWAL ERROR', err.message, '❌'); }
         }
 
         async function completeTask(index) {
             const task = DAILY_TASKS[index];
             try {
                 applyServerPayload(await api('/api/tasks/daily/complete', { method: 'POST', body: JSON.stringify({ type: task.type }) }));
-                showModal('ÖDÜL ALINDI', 'Görev ödülü hesabınıza geçti!', '🏆');
-            } catch (err) { showModal('GÖREV HATASI', err.message, '❌'); }
+                showModal('REWARD CLAIMED', 'Quest reward has been added to your account!', '🏆');
+            } catch (err) { showModal('QUEST ERROR', err.message, '❌'); }
         }
 
         async function completeSocialTask(index) {
@@ -991,8 +991,8 @@
             if (task?.link) window.open(task.link, '_blank');
             try {
                 applyServerPayload(await api('/api/tasks/social/complete', { method: 'POST', body: JSON.stringify({ taskId: task.id }) }));
-                showModal('BAŞARILI', 'Görev doğrulandı, ödül verildi!', '📱');
-            } catch (err) { showModal('GÖREV HATASI', err.message, '❌'); }
+                showModal('SUCCESS', 'Quest verified, reward granted!', '📱');
+            } catch (err) { showModal('QUEST ERROR', err.message, '❌'); }
         }
 
         function renderShop() {
@@ -1090,11 +1090,11 @@
                 <div class="wood-panel animate-fade-in !p-4 flex flex-col gap-4 max-h-[calc(100dvh-9rem)] overflow-y-auto hide-scrollbar">
                     <div class="text-center flex flex-col gap-1">
                         <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-300 to-orange-500 border-4 border-[#5b2b0d] flex items-center justify-center shadow-xl text-3xl text-[#4a2610]"><i class="fa-solid fa-coins"></i></div>
-                        <h3 class="font-black text-2xl text-[#fec636] uppercase drop-shadow-md">Convert Merkezi</h3>
-                        <p class="text-[11px] text-[#fde0bd] font-bold">Yumurtaları Silver'a, Silver'ı Robux'a güvenli şekilde dönüştür.</p>
+                        <h3 class="font-black text-2xl text-[#fec636] uppercase drop-shadow-md">Convert Center</h3>
+                        <p class="text-[11px] text-[#fde0bd] font-bold">Safely convert Eggs to Silver and Silver to Robux.</p>
                     </div>
                     <div class="grid grid-cols-3 gap-2">
-                        <div class="stat-box p-2 text-center"><div class="text-lg">🥚</div><div class="text-[9px] text-slate-300 font-black uppercase">Yumurta</div><div class="text-white font-black text-xs">${eggs}</div></div>
+                        <div class="stat-box p-2 text-center"><div class="text-lg">🥚</div><div class="text-[9px] text-slate-300 font-black uppercase">Eggs</div><div class="text-white font-black text-xs">${eggs}</div></div>
                         <div class="stat-box p-2 text-center"><div class="text-lg text-slate-200"><i class="fa-solid fa-coins"></i></div><div class="text-[9px] text-slate-300 font-black uppercase">Silver</div><div class="text-white font-black text-xs">${silver}</div></div>
                         <div class="stat-box p-2 text-center"><div class="text-lg text-emerald-300">R$</div><div class="text-[9px] text-slate-300 font-black uppercase">Robux</div><div class="text-white font-black text-xs">${robux}</div></div>
                     </div>
@@ -1104,23 +1104,23 @@
                     </div>
                     <div id="convert-pane-egg-to-silver" class="convert-tab-pane flex flex-col gap-3">
                         <div class="bg-[#3e210d] rounded-2xl p-4 border-2 border-[#2b1709] shadow-inner text-white">
-                            <div class="flex items-center justify-between text-xs font-black"><span>Kur</span><span class="text-[#fec636]">100 🥚 = 1 Silver</span></div>
-                            <div class="mt-2 text-[10px] text-[#fde0bd] font-bold leading-relaxed">Önce Warehouse ekranında yumurtaları topla, sonra burada Silver'a dönüştür.</div>
+                            <div class="flex items-center justify-between text-xs font-black"><span>Rate</span><span class="text-[#fec636]">100 🥚 = 1 Silver</span></div>
+                            <div class="mt-2 text-[10px] text-[#fde0bd] font-bold leading-relaxed">Collect eggs from the Warehouse first, then convert them to Silver here.</div>
                         </div>
-                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Dönüştürülecek Yumurta</label>
+                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Dönüştürülecek Eggs</label>
                         <input type="number" id="convert-egg-input" placeholder="Min: 100" onkeyup="updateEggConvertPreview()" class="w-full bg-[#3e210d] border-2 border-[#2b1709] rounded-xl p-3 text-sm text-white font-bold outline-none">
                         <div id="egg-convert-preview" class="text-center font-black text-green-300 text-xs min-h-[18px]"></div>
-                        <button onclick="executeEggToSilverConvert()" class="game-btn btn-primary w-full text-xs"><i class="fa-solid fa-coins"></i> GÜMÜŞE DÖNÜŞTÜR</button>
+                        <button onclick="executeEggToSilverConvert()" class="game-btn btn-primary w-full text-xs"><i class="fa-solid fa-coins"></i> CONVERT TO SILVER</button>
                     </div>
                     <div id="convert-pane-silver-to-robux" class="convert-tab-pane hidden flex flex-col gap-3">
                         <div class="bg-[#3e210d] rounded-2xl p-4 border-2 border-[#2b1709] shadow-inner text-white">
-                            <div class="flex items-center justify-between text-xs font-black"><span>Kur</span><span class="text-emerald-300">100 Silver = 1 R$</span></div>
-                            <div class="mt-2 text-[10px] text-[#fde0bd] font-bold leading-relaxed">Günlük Robux limiti ekonomi dengesini korumak için server tarafında kontrol edilir.</div>
+                            <div class="flex items-center justify-between text-xs font-black"><span>Rate</span><span class="text-emerald-300">100 Silver = 1 R$</span></div>
+                            <div class="mt-2 text-[10px] text-[#fde0bd] font-bold leading-relaxed">The daily Robux limit is enforced on the server to keep the economy balanced.</div>
                         </div>
-                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Dönüştürülecek Silver</label>
+                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Silver Amount to Convert</label>
                         <input type="number" id="convert-silver-input" placeholder="Min: 100" onkeyup="updateSilverConvertPreview()" class="w-full bg-[#3e210d] border-2 border-[#2b1709] rounded-xl p-3 text-sm text-white font-bold outline-none">
                         <div id="silver-convert-preview" class="text-center font-black text-green-300 text-xs min-h-[18px]"></div>
-                        <button onclick="executeSilverToRobuxConvert()" class="game-btn btn-primary w-full text-xs"><i class="fa-solid fa-gem"></i> ROBUX'A DÖNÜŞTÜR</button>
+                        <button onclick="executeSilverToRobuxConvert()" class="game-btn btn-primary w-full text-xs"><i class="fa-solid fa-gem"></i> CONVERT TO ROBUX</button>
                     </div>
                 </div>`;
         }
@@ -1131,21 +1131,21 @@
                 <div class="wood-panel animate-fade-in !p-4 flex flex-col gap-4 max-h-[calc(100dvh-9rem)] overflow-y-auto hide-scrollbar">
                     <div class="text-center">
                         <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-300 to-green-600 border-4 border-[#064e3b] flex items-center justify-center shadow-xl text-3xl text-white"><i class="fa-solid fa-wallet"></i></div>
-                        <h3 class="font-black text-2xl text-[#fec636] uppercase mt-2">Robux Çek</h3>
-                        <p class="text-[11px] text-[#fde0bd] font-bold">Roblox kullanıcı adını yaz, Silver bakiyenle güvenli çekim talebi oluştur.</p>
+                        <h3 class="font-black text-2xl text-[#fec636] uppercase mt-2">Withdraw Robux</h3>
+                        <p class="text-[11px] text-[#fde0bd] font-bold">Enter your Roblox username and create a secure payout request with your Silver balance.</p>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
                         <div class="stat-box p-3 text-center"><div class="text-[9px] text-slate-300 font-black uppercase">Silver</div><div class="text-white font-black">${Math.floor(gameState.silver || 0).toLocaleString()} S</div></div>
-                        <div class="stat-box p-3 text-center"><div class="text-[9px] text-slate-300 font-black uppercase">Kalan Günlük</div><div class="text-emerald-300 font-black">${remaining} R$</div></div>
+                        <div class="stat-box p-3 text-center"><div class="text-[9px] text-slate-300 font-black uppercase">Daily Left</div><div class="text-emerald-300 font-black">${remaining} R$</div></div>
                     </div>
                     <div class="bg-[#3e210d] rounded-2xl p-4 border-2 border-[#2b1709] flex flex-col gap-3 shadow-inner">
-                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Roblox Kullanıcı Adı</label>
+                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Roblox Username</label>
                         <input type="text" id="target-roblox-username" placeholder="Örn: RobloxGamerPro" class="w-full bg-[#2b1709] border-2 border-[#1c0d04] rounded-xl p-3 text-sm text-white font-bold outline-none">
-                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Harcanacak Silver</label>
+                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Silver to Spend</label>
                         <input type="number" id="withdraw-amount" placeholder="Min: 100" class="w-full bg-[#2b1709] border-2 border-[#1c0d04] rounded-xl p-3 text-sm text-white font-bold outline-none">
-                        <div class="rounded-xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed"><i class="fa-solid fa-shield-halved text-emerald-300 mr-1"></i> Roblox şifren asla istenmez. Talep admin kuyruğuna düşer ve server kayıtlarına işlenir.</div>
+                        <div class="rounded-xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed"><i class="fa-solid fa-shield-halved text-emerald-300 mr-1"></i> Your Roblox password is never requested. The request goes into the admin queue and is recorded server-side.</div>
                     </div>
-                    <button onclick="withdrawRobux()" class="game-btn btn-success w-full text-xs">TALEP OLUŞTUR <i class="fa-solid fa-paper-plane"></i></button>
+                    <button onclick="withdrawRobux()" class="game-btn btn-success w-full text-xs">CREATE REQUEST <i class="fa-solid fa-paper-plane"></i></button>
                 </div>`;
         }
 
@@ -1154,18 +1154,18 @@
             return `
                 <div class="wood-panel animate-fade-in !p-4 flex flex-col gap-4 max-h-[calc(100dvh-9rem)] overflow-y-auto hide-scrollbar text-center">
                     <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-300 to-amber-600 border-4 border-[#8a4f00] flex items-center justify-center shadow-xl text-3xl text-[#4a2610]"><i class="fa-solid fa-user-group"></i></div>
-                    <h3 class="font-black text-2xl text-[#fec636] uppercase">Referans Sistemi</h3>
-                    <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed">Arkadaşına sadece özel kodunu ver. Üye olurken Referans Kodu alanına manuel girsin.</p>
+                    <h3 class="font-black text-2xl text-[#fec636] uppercase">Referral System</h3>
+                    <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed">Give your private code to a friend. They manually enter it in the Referral Code field during signup.</p>
                     <div class="bg-[#3e210d] border-2 border-[#2b1709] rounded-2xl p-4 shadow-inner text-left">
-                        <div class="text-[10px] text-slate-300 font-black uppercase mb-1">Referans Kodun</div>
+                        <div class="text-[10px] text-slate-300 font-black uppercase mb-1">Your Referral Code</div>
                         <div class="text-[#fec636] text-lg font-black break-all">${code}</div>
                     </div>
                     <div class="bg-[#3e210d] border-2 border-[#2b1709] rounded-2xl p-4 shadow-inner text-left">
-                        <div class="text-[10px] text-slate-300 font-black uppercase mb-1">Nasıl Kullanılır?</div>
-                        <div class="text-white text-xs font-bold leading-relaxed">1) Kodunu arkadaşına gönder.<br>2) Arkadaşın kayıt ekranındaki Referans Kodu alanına bu kodu yazar.<br>3) Geçerliyse iki hesaba da bonus Silver işlenir.</div>
+                        <div class="text-[10px] text-slate-300 font-black uppercase mb-1">How to Use</div>
+                        <div class="text-white text-xs font-bold leading-relaxed">1) Send your code to a friend.<br>2) Your friend enters it in the Referral Code field on signup.<br>3) If valid, both accounts receive bonus Silver.</div>
                     </div>
-                    <button onclick="copyRefCode()" class="game-btn btn-primary w-full text-[10px] !px-2"><i class="fa-solid fa-copy"></i> REFERANS KODUNU KOPYALA</button>
-                    <div class="rounded-2xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed text-left"><i class="fa-solid fa-circle-info text-[#fec636] mr-1"></i> Link yok; sistem sadece manuel girilen kişiye özel kodla çalışır.</div>
+                    <button onclick="copyRefCode()" class="game-btn btn-primary w-full text-[10px] !px-2"><i class="fa-solid fa-copy"></i> COPY REFERRAL CODE</button>
+                    <div class="rounded-2xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed text-left"><i class="fa-solid fa-circle-info text-[#fec636] mr-1"></i> No links: the system works only with manually entered personal codes.</div>
                 </div>`;
         }
 
@@ -1175,7 +1175,7 @@
                 const title = currentLang === 'TR' ? tx.title_TR : tx.title_EN;
                 return `<div class="bg-[#3e210d] border-2 border-[#2b1709] p-3 rounded-2xl text-xs text-white flex items-center gap-3 shadow-inner">
                     <div class="w-9 h-9 rounded-xl ${isMinus ? 'bg-rose-700' : 'bg-emerald-700'} flex items-center justify-center shrink-0"><i class="fa-solid ${isMinus ? 'fa-arrow-down' : 'fa-arrow-up'}"></i></div>
-                    <div class="flex-1 min-w-0 text-left"><div class="font-black text-[#ffe8cb] truncate">${title || 'İşlem'}</div><div class="text-[9px] text-slate-400 font-bold">${tx.time || '0m'}</div></div>
+                    <div class="flex-1 min-w-0 text-left"><div class="font-black text-[#ffe8cb] truncate">${title || 'Transaction'}</div><div class="text-[9px] text-slate-400 font-bold">${tx.time || '0m'}</div></div>
                     <span class="font-black ${isMinus ? 'text-red-300' : 'text-green-300'} shrink-0">${tx.change}</span>
                 </div>`;
             }).join('');
@@ -1183,10 +1183,10 @@
                 <div class="wood-panel animate-fade-in !p-4 flex flex-col gap-4 max-h-[calc(100dvh-9rem)] overflow-y-auto hide-scrollbar">
                     <div class="text-center">
                         <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-300 to-indigo-600 border-4 border-[#1e3a8a] flex items-center justify-center shadow-xl text-3xl text-white"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                        <h3 class="font-black text-2xl text-[#fec636] uppercase mt-2">İşlem Geçmişi</h3>
-                        <p class="text-[11px] text-[#fde0bd] font-bold">Convert, çekim, görev ve toplama kayıtların.</p>
+                        <h3 class="font-black text-2xl text-[#fec636] uppercase mt-2">Transaction History</h3>
+                        <p class="text-[11px] text-[#fde0bd] font-bold">Your convert, withdrawal, quest, and collection records.</p>
                     </div>
-                    <div class="flex flex-col gap-2 max-h-[56dvh] overflow-y-auto hide-scrollbar pr-1">${rows || '<p class="text-xs text-gray-300 text-center py-8">Henüz işlem kaydı yok.</p>'}</div>
+                    <div class="flex flex-col gap-2 max-h-[56dvh] overflow-y-auto hide-scrollbar pr-1">${rows || '<p class="text-xs text-gray-300 text-center py-8">No transaction records yet.</p>'}</div>
                 </div>`;
         }
 
@@ -1199,7 +1199,7 @@
             else if (page === 'withdraw') area.innerHTML = renderWithdrawMenuPage();
             else if (page === 'referral') area.innerHTML = renderReferralMenuPage();
             else if (page === 'history') area.innerHTML = renderHistoryMenuPage();
-            else if (page === 'admin') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-3"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-user-gear mr-1"></i> Yönetici</h3><div class="flex bg-[#2b1407]/40 p-1 rounded-xl border border-[#3c1e0a] gap-1"><button onclick="switchAdminTab('withdrawals')" id="admin-tab-btn-withdrawals" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Çekimler</button><button onclick="switchAdminTab('tasks')" id="admin-tab-btn-tasks" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Görevler</button></div><div id="admin-pane-withdrawals" class="admin-tab-pane flex flex-col gap-2 max-h-[260px] overflow-y-auto">${pendingWithdrawals.map(p => `<div class="bg-[#3e210d] p-2 rounded-xl text-xs text-white"><b>@${p.username}</b> • ${p.amount} S ➔ ${p.robux} R$ <span class="text-amber-300">${p.status}</span></div>`).join('') || '<p class="text-xs text-gray-300">Bekleyen yok.</p>'}</div><div id="admin-pane-tasks" class="admin-tab-pane hidden flex flex-col gap-2"><input id="admin-task-title-tr" placeholder="Görev Adı TR" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-title-en" placeholder="Quest Title EN" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-reward" type="number" placeholder="Ödül S" class="bg-[#3e210d] p-2 rounded text-xs text-white"><select id="admin-task-platform" class="bg-[#3e210d] p-2 rounded text-xs text-white"><option value="youtube">YouTube</option><option value="telegram">Telegram</option><option value="twitter">Twitter</option><option value="instagram">Instagram</option><option value="default">Diğer</option></select><input id="admin-task-link" placeholder="https://..." class="bg-[#3e210d] p-2 rounded text-xs text-white"><button onclick="adminAddNewSocialTask()" class="game-btn btn-success w-full text-xs">Görevi Yayınla</button></div></div>`;
+            else if (page === 'admin') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-3"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-user-gear mr-1"></i> Admin</h3><div class="flex bg-[#2b1407]/40 p-1 rounded-xl border border-[#3c1e0a] gap-1"><button onclick="switchAdminTab('withdrawals')" id="admin-tab-btn-withdrawals" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Withdrawals</button><button onclick="switchAdminTab('tasks')" id="admin-tab-btn-tasks" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Tasks</button></div><div id="admin-pane-withdrawals" class="admin-tab-pane flex flex-col gap-2 max-h-[260px] overflow-y-auto">${pendingWithdrawals.map(p => `<div class="bg-[#3e210d] p-2 rounded-xl text-xs text-white"><b>@${p.username}</b> • ${p.amount} S ➔ ${p.robux} R$ <span class="text-amber-300">${p.status}</span></div>`).join('') || '<p class="text-xs text-gray-300">No pending requests.</p>'}</div><div id="admin-pane-tasks" class="admin-tab-pane hidden flex flex-col gap-2"><input id="admin-task-title-tr" placeholder="Task Title TR" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-title-en" placeholder="Quest Title EN" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-reward" type="number" placeholder="Reward S" class="bg-[#3e210d] p-2 rounded text-xs text-white"><select id="admin-task-platform" class="bg-[#3e210d] p-2 rounded text-xs text-white"><option value="youtube">YouTube</option><option value="telegram">Telegram</option><option value="twitter">Twitter</option><option value="instagram">Instagram</option><option value="default">Other</option></select><input id="admin-task-link" placeholder="https://..." class="bg-[#3e210d] p-2 rounded text-xs text-white"><button onclick="adminAddNewSocialTask()" class="game-btn btn-success w-full text-xs">Publish Task</button></div></div>`;
             if (page === 'convert') switchConvertTab(currentConvertTab);
             if (page === 'admin') switchAdminTab(currentAdminTab);
         }
@@ -1208,23 +1208,23 @@
 
         async function adminAddNewSocialTask() {
             const payload = { title_TR: document.getElementById('admin-task-title-tr').value, title_EN: document.getElementById('admin-task-title-en').value, reward: document.getElementById('admin-task-reward').value, platform: document.getElementById('admin-task-platform').value, link: document.getElementById('admin-task-link').value };
-            try { const data = await api('/api/admin/social-tasks', { method: 'POST', body: JSON.stringify(payload) }); SOCIAL_TASKS_DB = data.socialTasks; openMenuPage('admin'); showModal('YAYINLANDI', 'Sosyal görev eklendi.', '✅'); }
-            catch (err) { showModal('HATA', err.message, '❌'); }
+            try { const data = await api('/api/admin/social-tasks', { method: 'POST', body: JSON.stringify(payload) }); SOCIAL_TASKS_DB = data.socialTasks; openMenuPage('admin'); showModal('PUBLISHED', 'Social task added.', '✅'); }
+            catch (err) { showModal('ERROR', err.message, '❌'); }
         }
 
-        function translatePage() { const langData = TRANSLATIONS[currentLang]; document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (langData[key]) el.innerHTML = langData[key]; }); document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if (langData[key]) el.setAttribute('placeholder', langData[key]); }); updateUI(); renderTasks(); }
-        function toggleLanguage() { currentLang = currentLang === 'TR' ? 'EN' : 'TR'; document.getElementById('auth-lang-btn').innerText = currentLang === 'TR' ? 'EN' : 'TR'; document.getElementById('game-lang-btn').innerText = currentLang === 'TR' ? 'EN' : 'TR'; translatePage(); }
+        function translatePage() { const langData = TRANSLATIONS[currentLang]; document.documentElement.lang = currentLang === 'EN' ? 'en' : 'tr'; const nextLang = currentLang === 'EN' ? 'TR' : 'EN'; const authBtn = document.getElementById('auth-lang-btn'); const gameBtn = document.getElementById('game-lang-btn'); if (authBtn) authBtn.innerText = nextLang; if (gameBtn) gameBtn.innerText = nextLang; document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (langData[key]) el.innerHTML = langData[key]; }); document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if (langData[key]) el.setAttribute('placeholder', langData[key]); }); updateUI(); renderTasks(); }
+        function toggleLanguage() { currentLang = currentLang === 'TR' ? 'EN' : 'TR'; translatePage(); }
         function showHowItWorks() { document.getElementById('how-it-works-modal').classList.remove('hidden'); document.getElementById('how-it-works-modal').classList.add('flex'); }
         function closeHowItWorks() { document.getElementById('how-it-works-modal').classList.add('hidden'); document.getElementById('how-it-works-modal').classList.remove('flex'); }
         function showModal(title, msg, icon = '📢') { document.getElementById('modal-title').innerText = title; document.getElementById('modal-message').innerText = msg; document.getElementById('modal-icon').innerText = icon; document.getElementById('custom-modal').classList.remove('hidden'); document.getElementById('custom-modal').classList.add('flex'); }
         function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); document.getElementById('custom-modal').classList.remove('flex'); }
         function spawnSparkle() { const container = document.getElementById('sparkle-container'); if (!container) return; const particle = document.createElement('div'); particle.classList.add('sparkle-particle'); const size = Math.random() * 8 + 4; particle.style.width = `${size}px`; particle.style.height = `${size}px`; particle.style.left = `${Math.random() * 100}%`; particle.style.bottom = `${Math.random() * 40 + 10}px`; const duration = Math.random() * 3 + 2; particle.style.animation = `rise-gold ${duration}s ease-out forwards`; container.appendChild(particle); setTimeout(() => particle.remove(), duration * 1000); }
         setInterval(spawnSparkle, 750);
-        function copyText(text, title = 'KOPYALANDI') { const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showModal(title, text, '📋'); }
+        function copyText(text, title = 'COPIED') { const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showModal(title, text, '📋'); }
         function copyRefCode() { copyText(gameState.referralCode || currentActiveUser || 'DEMO'); }
         function copyToClipboard(text) { copyText(text); }
-        function approveWithdrawal() { showModal('BİLGİ', 'Onay işlemi backend admin akışına bağlanabilir.', 'ℹ️'); }
-        function rejectWithdrawal() { showModal('BİLGİ', 'Reddetme işlemi backend admin akışına bağlanabilir.', 'ℹ️'); }
+        function approveWithdrawal() { showModal('INFO', 'Approval can be connected to the backend admin flow.', 'ℹ️'); }
+        function rejectWithdrawal() { showModal('INFO', 'Rejection can be connected to the backend admin flow.', 'ℹ️'); }
     </script>
 </body>
 </html>
