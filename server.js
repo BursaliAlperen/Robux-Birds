@@ -17,6 +17,8 @@ const ADMIN_USER_IDS = String(process.env.ADMIN_USER_IDS || '')
   .filter(Boolean);
 const DAILY_ROBUX_LIMIT = 50;
 const ENERGY_DURATION_MS = 16200 * 1000; // 4.5 hours
+const KEEP_ALIVE_INTERVAL_MS = Number(process.env.KEEP_ALIVE_INTERVAL_MS || 840000); // 14 minutes
+const KEEP_ALIVE_URL = String(process.env.KEEP_ALIVE_URL || process.env.RENDER_EXTERNAL_URL || '').replace(/\/$/, '');
 
 app.use(express.json({ limit: '2mb' }));
 app.use(express.static('public'));
@@ -78,6 +80,27 @@ function initFirebase() {
 }
 
 initFirebase();
+
+function startKeepAlivePing() {
+  if (!KEEP_ALIVE_URL) {
+    console.log('Keep-alive ping disabled: set KEEP_ALIVE_URL or RENDER_EXTERNAL_URL to enable it.');
+    return;
+  }
+
+  const pingUrl = `${KEEP_ALIVE_URL}/health`;
+  const ping = async () => {
+    try {
+      const response = await fetch(pingUrl);
+      if (!response.ok) console.warn(`Keep-alive ping returned ${response.status} for ${pingUrl}`);
+    } catch (err) {
+      console.warn(`Keep-alive ping failed for ${pingUrl}:`, err.message);
+    }
+  };
+
+  setInterval(ping, KEEP_ALIVE_INTERVAL_MS).unref();
+  setTimeout(ping, 10000).unref();
+  console.log(`Keep-alive ping enabled for ${pingUrl} every ${Math.round(KEEP_ALIVE_INTERVAL_MS / 60000)} minutes.`);
+}
 
 function isAdminUser(userId) {
   return ADMIN_USER_IDS.includes(String(userId || '').trim().toLowerCase());
@@ -332,6 +355,10 @@ function assertAmount(value, min, label) {
   return amount;
 }
 
+app.get('/health', (_req, res) => {
+  res.json({ ok: true, uptime: process.uptime(), timestamp: now() });
+});
+
 app.get('/api/config', (_req, res) => {
   res.json({ birds: BIRD_DB, dailyRobuxLimit: DAILY_ROBUX_LIMIT, energyDurationMs: ENERGY_DURATION_MS });
 });
@@ -552,6 +579,7 @@ bootstrapDataStore()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Robux Birds server running on http://localhost:${PORT}`);
+      startKeepAlivePing();
     });
   })
   .catch(err => {
