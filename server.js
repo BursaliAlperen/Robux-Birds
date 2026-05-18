@@ -143,6 +143,32 @@ function verifyPassword(password, stored) {
   return Boolean(salt) && hashPassword(password, salt) === stored;
 }
 
+const EMAIL_PATTERN = /^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/;
+
+function normalizeEmail(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function assertValidEmail(value) {
+  const email = normalizeEmail(value);
+  if (!EMAIL_PATTERN.test(email)) {
+    throw Object.assign(new Error('Geçerli bir e-posta adresi girin.'), { status: 400 });
+  }
+  return email;
+}
+
+function assertValidPassword(value) {
+  const password = String(value || '').trim();
+  if (password.length < 6) {
+    throw Object.assign(new Error('Şifre en az 6 karakter olmalı.'), { status: 400 });
+  }
+  return password;
+}
+
+function displayNameFromEmail(email) {
+  return email.split('@')[0] || email;
+}
+
 function userIdFrom(req) {
   return String(req.header('x-user-id') || '').trim().toLowerCase();
 }
@@ -157,10 +183,11 @@ function now() {
   return Date.now();
 }
 
-function createDefaultUser(username, password, referredBy = '') {
+function createDefaultUser(email, password, referredBy = '') {
   return {
-    id: username.toLowerCase(),
-    username,
+    id: email,
+    email,
+    username: displayNameFromEmail(email),
     passwordHash: hashPassword(password),
     sessionTokenHash: '',
     silver: 1500,
@@ -311,21 +338,20 @@ app.get('/api/config', (_req, res) => {
 
 app.post('/api/auth/signup', async (req, res, next) => {
   try {
-    const username = String(req.body.username || '').trim();
-    const password = String(req.body.password || '').trim();
-    const refCode = String(req.body.refCode || '').trim().toLowerCase();
-    if (!username || !password) return res.status(400).json({ error: 'Kullanıcı adı ve şifre zorunlu.' });
-    const id = username.toLowerCase();
-    if (await getUser(id)) return res.status(409).json({ error: 'Bu kullanıcı zaten var.' });
+    const email = assertValidEmail(req.body.email || req.body.username);
+    const password = assertValidPassword(req.body.password);
+    const refCode = normalizeEmail(req.body.refCode);
+    const id = email;
+    if (await getUser(id)) return res.status(409).json({ error: 'Bu e-posta ile kayıtlı hesap zaten var.' });
 
-    const user = createDefaultUser(username, password, refCode);
+    const user = createDefaultUser(email, password, refCode);
     if (refCode && refCode !== id) {
       const referrer = await getUser(refCode);
       if (referrer) {
         user.silver += 500;
         const normalizedReferrer = normalizeUser(referrer);
         normalizedReferrer.silver += 500;
-        pushHistory(normalizedReferrer, { title_TR: `Referans Bonusu (${username})`, title_EN: `Referral Bonus (${username})`, change: '+500 S', type: 'plus' });
+        pushHistory(normalizedReferrer, { title_TR: `Referans Bonusu (${email})`, title_EN: `Referral Bonus (${email})`, change: '+500 S', type: 'plus' });
         await setUser(refCode, normalizedReferrer);
       }
     }
@@ -338,15 +364,15 @@ app.post('/api/auth/signup', async (req, res, next) => {
 
 app.post('/api/auth/login', async (req, res, next) => {
   try {
-    const username = String(req.body.username || '').trim().toLowerCase();
+    const email = assertValidEmail(req.body.email || req.body.username);
     const password = String(req.body.password || '').trim();
-    const user = username ? await getUser(username) : null;
-    if (!user || !verifyPassword(password, user.passwordHash)) return res.status(401).json({ error: 'Kullanıcı adı veya şifre hatalı.' });
+    const user = await getUser(email);
+    if (!user || !verifyPassword(password, user.passwordHash)) return res.status(401).json({ error: 'E-posta veya şifre hatalı.' });
     const sessionToken = createSessionToken();
     const normalized = normalizeUser(user);
     normalized.sessionTokenHash = hashSessionToken(sessionToken);
     normalized.lastLoginAt = now();
-    await setUser(username, normalized);
+    await setUser(email, normalized);
     res.json({ user: publicUser(normalized), sessionToken });
   } catch (err) {
     next(err);
@@ -355,9 +381,9 @@ app.post('/api/auth/login', async (req, res, next) => {
 
 app.post('/api/auth/forgot', async (req, res, next) => {
   try {
-    const username = String(req.body.username || '').trim().toLowerCase();
-    const user = username ? await getUser(username) : null;
-    if (!user) return res.status(404).json({ error: 'Kullanıcı bulunamadı.' });
+    const email = assertValidEmail(req.body.email || req.body.username);
+    const user = await getUser(email);
+    if (!user) return res.status(404).json({ error: 'Bu e-posta ile kayıtlı kullanıcı bulunamadı.' });
     res.json({ message: 'Şifre sıfırlama talebi alındı. Yönetici ile iletişime geçin.' });
   } catch (err) {
     next(err);

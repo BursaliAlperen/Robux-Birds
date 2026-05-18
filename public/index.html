@@ -374,8 +374,8 @@
                     </div>
                     <div class="flex flex-col gap-3 wood-panel-inner p-3">
                         <div class="relative">
-                            <i class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="login-username" type="text" placeholder="Kullanıcı Adı veya E-posta" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                            <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="login-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
                         </div>
                         <div class="relative">
                             <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
@@ -393,8 +393,8 @@
                     </div>
                     <div class="flex flex-col gap-3 wood-panel-inner p-3">
                         <div class="relative">
-                            <i class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="signup-username" type="text" placeholder="Kullanıcı Adı veya E-posta" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                            <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="signup-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
                         </div>
                         <div class="relative">
                             <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
@@ -416,8 +416,8 @@
                     </div>
                     <div class="flex flex-col gap-3 wood-panel-inner p-3">
                         <div class="relative">
-                            <i class="fa-solid fa-user-shield absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
-                            <input id="forgot-username" type="text" placeholder="Kullanıcı Adı veya E-posta" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                            <i class="fa-solid fa-envelope-circle-check absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="forgot-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
                         </div>
                     </div>
                     <button onclick="authForgotPassword()" class="game-btn btn-wood text-md py-3 mt-1">
@@ -676,10 +676,10 @@
 
         const TRANSLATIONS = {
             TR: {
-                title: 'ROBUX BIRDS', loginHeader: 'GİRİŞ YAP', loginSub: 'Kuş yetiştir, yumurtaları topla, gerçek Robux kazan!', usernamePlh: 'Kullanıcı Adı veya E-posta', passwordPlh: 'Oyun Şifresi', newPasswordPlh: 'Yeni Oyun Şifresi', refCodePlh: 'Referans Kodu (İsteğe Bağlı)', securityAlertTitle: "<i class='fa-solid fa-shield-halved text-red-400 mr-1'></i> Şifre Güvenlik Uyarısı", securityAlertText: 'Roblox şifreniz KESİNLİKLE istenmez! Sadece buradaki profiliniz için bağımsız bir şifre belirleyin.', startBtn: 'BAŞLA', registerBtn: 'KAYIT OL', forgotBtn: 'SIFIRLA', forgotSub: 'Şifrenizi sıfırlamak için kullanıcı adınızı girin.', howBtn: 'Nasıl Çalışır?', navShop: 'Mağaza', navTasks: 'Görevler', navBirds: 'Kuşlar', navWarehouse: 'Depo', navMenu: 'Menü', shopTitle: 'Kuş Pazarı', tasksTitle: 'Altın Görevler', dailyTasks: 'Günlük', socialTasks: 'Sosyal Medya', collectedEggs: 'Hesabındaki Yumurtalar', uncollectedEggs: 'Depoda Biriken Yumurtalar', silverLabel: 'Gümüş:', warehouseCollectDesc: "Kuşlarınızın ürettiği yumurtalar depoda birikir. Buradan yumurtaları hesabınıza toplayabilir, ardından 'Convert' menüsünden gümüşe dönüştürebilirsiniz.", warehouseTitle: 'Yumurta Deposu', warehouseEggs: 'Depodaki Yumurtalar', warehouseInfoTitle: "<i class='fa-solid fa-circle-info mr-1 text-[#fec636]'></i> Depo Kuralları", collectAllBtn: 'YUMURTALARI TOPLA', menuTitle: 'MENÜ', menuConvert: 'Convert (Dönüştür)', menuWithdraw: 'Robux Çek', menuRef: 'Referans Sistemi', menuHistory: 'İşlem Geçmişi', menuAdmin: 'Yönetici Paneli', menuLogout: 'Çıkış Yap', backBtn: 'Geri', modalClose: 'TAMAM', howItWorksTitle: 'NASIL ÇALIŞIR?', rule1: '<strong>Kuş Satın Alın:</strong> Başlangıçta size verilen Gümüş (S) ile ilk kuşunuzu sahiplenin.', rule2: '<strong>Yumurtaları Toplayın:</strong> Kuşların ürettiği yumurtalar Depoda birikir. Depodan toplayarak hesabınıza aktarın.', rule3: '<strong>Gümüşe Çevirin:</strong> Menüdeki "Convert" sekmesinden yumurtalarınızı Gümüşe çevirebilirsiniz. (100 Yumurta = 1 Gümüş)', rule4: '<strong>Robuxa Dönüştürün:</strong> Convert kısmından gümüşleri Robuxa dönüştürebilirsiniz. (100 Gümüş = 1 Robux)', rule5: '<strong>Robux Çekin:</strong> Talep oluşturarak Roblox hesabınıza şifresiz transfer talebi gönderin!', rule6: '<strong>Günlük Limit:</strong> Adil oyun dengesi için her oyuncu günde maksimum <strong>50 Robux</strong> alabilir.', birdsSleeping: 'Kuşlar yoruldu ve uykuya geçti! Devam etmek için yem verin.', wakeUpLabel: 'YEM VER & UYANDIR', refEnterBtn: 'GÖNDER', referredFriends: 'Referanslı Arkadaşlar'
+                title: 'ROBUX BIRDS', loginHeader: 'GİRİŞ YAP', loginSub: 'Kuş yetiştir, yumurtaları topla, gerçek Robux kazan!', usernamePlh: 'E-posta Adresi', passwordPlh: 'Oyun Şifresi', newPasswordPlh: 'Yeni Oyun Şifresi', refCodePlh: 'Referans Kodu (İsteğe Bağlı)', securityAlertTitle: "<i class='fa-solid fa-shield-halved text-red-400 mr-1'></i> Şifre Güvenlik Uyarısı", securityAlertText: 'Roblox şifreniz KESİNLİKLE istenmez! Sadece buradaki profiliniz için bağımsız bir şifre belirleyin.', startBtn: 'BAŞLA', registerBtn: 'KAYIT OL', forgotBtn: 'SIFIRLA', forgotSub: 'Şifrenizi sıfırlamak için e-posta adresinizi girin.', howBtn: 'Nasıl Çalışır?', navShop: 'Mağaza', navTasks: 'Görevler', navBirds: 'Kuşlar', navWarehouse: 'Depo', navMenu: 'Menü', shopTitle: 'Kuş Pazarı', tasksTitle: 'Altın Görevler', dailyTasks: 'Günlük', socialTasks: 'Sosyal Medya', collectedEggs: 'Hesabındaki Yumurtalar', uncollectedEggs: 'Depoda Biriken Yumurtalar', silverLabel: 'Gümüş:', warehouseCollectDesc: "Kuşlarınızın ürettiği yumurtalar depoda birikir. Buradan yumurtaları hesabınıza toplayabilir, ardından 'Convert' menüsünden gümüşe dönüştürebilirsiniz.", warehouseTitle: 'Yumurta Deposu', warehouseEggs: 'Depodaki Yumurtalar', warehouseInfoTitle: "<i class='fa-solid fa-circle-info mr-1 text-[#fec636]'></i> Depo Kuralları", collectAllBtn: 'YUMURTALARI TOPLA', menuTitle: 'MENÜ', menuConvert: 'Convert (Dönüştür)', menuWithdraw: 'Robux Çek', menuRef: 'Referans Sistemi', menuHistory: 'İşlem Geçmişi', menuAdmin: 'Yönetici Paneli', menuLogout: 'Çıkış Yap', backBtn: 'Geri', modalClose: 'TAMAM', howItWorksTitle: 'NASIL ÇALIŞIR?', rule1: '<strong>Kuş Satın Alın:</strong> Başlangıçta size verilen Gümüş (S) ile ilk kuşunuzu sahiplenin.', rule2: '<strong>Yumurtaları Toplayın:</strong> Kuşların ürettiği yumurtalar Depoda birikir. Depodan toplayarak hesabınıza aktarın.', rule3: '<strong>Gümüşe Çevirin:</strong> Menüdeki "Convert" sekmesinden yumurtalarınızı Gümüşe çevirebilirsiniz. (100 Yumurta = 1 Gümüş)', rule4: '<strong>Robuxa Dönüştürün:</strong> Convert kısmından gümüşleri Robuxa dönüştürebilirsiniz. (100 Gümüş = 1 Robux)', rule5: '<strong>Robux Çekin:</strong> Talep oluşturarak Roblox hesabınıza şifresiz transfer talebi gönderin!', rule6: '<strong>Günlük Limit:</strong> Adil oyun dengesi için her oyuncu günde maksimum <strong>50 Robux</strong> alabilir.', birdsSleeping: 'Kuşlar yoruldu ve uykuya geçti! Devam etmek için yem verin.', wakeUpLabel: 'YEM VER & UYANDIR', refEnterBtn: 'GÖNDER', referredFriends: 'Referanslı Arkadaşlar'
             },
             EN: {
-                title: 'ROBUX BIRDS', loginHeader: 'LOGIN', loginSub: 'Raise birds, collect eggs, earn real Robux!', usernamePlh: 'Username or Email', passwordPlh: 'Game Password', newPasswordPlh: 'New Game Password', refCodePlh: 'Referral Code (Optional)', securityAlertTitle: "<i class='fa-solid fa-shield-halved text-red-400 mr-1'></i> Password Safety Warning", securityAlertText: 'Your Roblox password is NEVER requested! Create an independent password only for this profile.', startBtn: 'START', registerBtn: 'REGISTER', forgotBtn: 'RESET', forgotSub: 'Enter your username to reset your password.', howBtn: 'How It Works?', navShop: 'Shop', navTasks: 'Tasks', navBirds: 'Birds', navWarehouse: 'Warehouse', navMenu: 'Menu', shopTitle: 'Bird Market', tasksTitle: 'Golden Quests', dailyTasks: 'Daily', socialTasks: 'Social Media', collectedEggs: 'Eggs In Account', uncollectedEggs: 'Eggs Accumulated in Warehouse', silverLabel: 'Silver:', warehouseCollectDesc: "Eggs produced by your birds accumulate in the warehouse. Collect them to your account here, then convert them to silver from the Convert menu.", warehouseTitle: 'Egg Warehouse', warehouseEggs: 'Warehouse Eggs', warehouseInfoTitle: "<i class='fa-solid fa-circle-info mr-1 text-[#fec636]'></i> Warehouse Rules", collectAllBtn: 'COLLECT EGGS', menuTitle: 'MENU', menuConvert: 'Convert', menuWithdraw: 'Withdraw Robux', menuRef: 'Referral System', menuHistory: 'History', menuAdmin: 'Admin Panel', menuLogout: 'Logout', backBtn: 'Back', modalClose: 'OK', howItWorksTitle: 'HOW IT WORKS?', rule1: '<strong>Buy Birds:</strong> Adopt your first bird with starter Silver (S).', rule2: '<strong>Collect Eggs:</strong> Birds produce eggs into the Warehouse. Collect from Warehouse to move eggs to your account.', rule3: '<strong>Convert to Silver:</strong> Use Convert to exchange eggs for Silver. (100 Eggs = 1 Silver)', rule4: '<strong>Convert to Robux:</strong> Convert Silver to Robux in Convert. (100 Silver = 1 Robux)', rule5: '<strong>Withdraw Robux:</strong> Request secure payouts to your Roblox username password-free!', rule6: '<strong>Daily Limit:</strong> Each player can receive up to <strong>50 Robux</strong> daily.', birdsSleeping: 'Birds are tired and fell asleep! Give them feed to wake them up.', wakeUpLabel: 'FEED & WAKE UP', refEnterBtn: 'SUBMIT', referredFriends: 'Referred Friends List'
+                title: 'ROBUX BIRDS', loginHeader: 'LOGIN', loginSub: 'Raise birds, collect eggs, earn real Robux!', usernamePlh: 'Email Address', passwordPlh: 'Game Password', newPasswordPlh: 'New Game Password', refCodePlh: 'Referral Code (Optional)', securityAlertTitle: "<i class='fa-solid fa-shield-halved text-red-400 mr-1'></i> Password Safety Warning", securityAlertText: 'Your Roblox password is NEVER requested! Create an independent password only for this profile.', startBtn: 'START', registerBtn: 'REGISTER', forgotBtn: 'RESET', forgotSub: 'Enter your email address to reset your password.', howBtn: 'How It Works?', navShop: 'Shop', navTasks: 'Tasks', navBirds: 'Birds', navWarehouse: 'Warehouse', navMenu: 'Menu', shopTitle: 'Bird Market', tasksTitle: 'Golden Quests', dailyTasks: 'Daily', socialTasks: 'Social Media', collectedEggs: 'Eggs In Account', uncollectedEggs: 'Eggs Accumulated in Warehouse', silverLabel: 'Silver:', warehouseCollectDesc: "Eggs produced by your birds accumulate in the warehouse. Collect them to your account here, then convert them to silver from the Convert menu.", warehouseTitle: 'Egg Warehouse', warehouseEggs: 'Warehouse Eggs', warehouseInfoTitle: "<i class='fa-solid fa-circle-info mr-1 text-[#fec636]'></i> Warehouse Rules", collectAllBtn: 'COLLECT EGGS', menuTitle: 'MENU', menuConvert: 'Convert', menuWithdraw: 'Withdraw Robux', menuRef: 'Referral System', menuHistory: 'History', menuAdmin: 'Admin Panel', menuLogout: 'Logout', backBtn: 'Back', modalClose: 'OK', howItWorksTitle: 'HOW IT WORKS?', rule1: '<strong>Buy Birds:</strong> Adopt your first bird with starter Silver (S).', rule2: '<strong>Collect Eggs:</strong> Birds produce eggs into the Warehouse. Collect from Warehouse to move eggs to your account.', rule3: '<strong>Convert to Silver:</strong> Use Convert to exchange eggs for Silver. (100 Eggs = 1 Silver)', rule4: '<strong>Convert to Robux:</strong> Convert Silver to Robux in Convert. (100 Silver = 1 Robux)', rule5: '<strong>Withdraw Robux:</strong> Request secure payouts to your Roblox username password-free!', rule6: '<strong>Daily Limit:</strong> Each player can receive up to <strong>50 Robux</strong> daily.', birdsSleeping: 'Birds are tired and fell asleep! Give them feed to wake them up.', wakeUpLabel: 'FEED & WAKE UP', refEnterBtn: 'SUBMIT', referredFriends: 'Referred Friends List'
             }
         };
 
@@ -756,11 +756,11 @@
         }
 
         async function authLogin() {
-            const username = document.getElementById('login-username').value.trim();
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
             const password = document.getElementById('login-password').value.trim();
-            if (!username || !password) return showModal('HATA', 'Lütfen tüm alanları eksiksiz doldurun!', '❌');
+            if (!email || !password) return showModal('HATA', 'Lütfen e-posta ve şifre alanlarını doldurun!', '❌');
             try {
-                applyServerPayload(await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ username, password }) }));
+                applyServerPayload(await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }));
                 document.getElementById('screen-auth').classList.add('hidden');
                 document.getElementById('screen-game').classList.remove('hidden');
                 document.getElementById('screen-game').classList.add('flex');
@@ -770,23 +770,23 @@
         }
 
         async function authSignup() {
-            const username = document.getElementById('signup-username').value.trim();
+            const email = document.getElementById('signup-email').value.trim().toLowerCase();
             const password = document.getElementById('signup-password').value.trim();
-            const refCode = document.getElementById('signup-ref').value.trim();
-            if (!username || !password) return showModal('HATA', 'Lütfen kullanıcı adı ve şifre girin!', '❌');
+            const refCode = document.getElementById('signup-referral').value.trim().toLowerCase();
+            if (!email || !password) return showModal('HATA', 'Lütfen e-posta ve şifre girin!', '❌');
             try {
-                await api('/api/auth/signup', { method: 'POST', body: JSON.stringify({ username, password, refCode }) });
-                showModal('KAYIT BAŞARILI', 'Hesabınız oluşturuldu. Şimdi giriş yapabilirsiniz.', '🎉');
+                await api('/api/auth/signup', { method: 'POST', body: JSON.stringify({ email, password, refCode }) });
+                showModal('KAYIT BAŞARILI', 'Hesabınız oluşturuldu. Şimdi e-posta ve şifrenizle giriş yapabilirsiniz.', '🎉');
                 switchAuthTab('login');
-                document.getElementById('login-username').value = username;
+                document.getElementById('login-email').value = email;
             } catch (err) { showModal('KAYIT HATASI', err.message, '❌'); }
         }
 
         async function authForgotPassword() {
-            const username = document.getElementById('forgot-username').value.trim();
-            if (!username) return showModal('HATA', 'Kullanıcı adınızı girin!', '❌');
+            const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+            if (!email) return showModal('HATA', 'E-posta adresinizi girin!', '❌');
             try {
-                const data = await api('/api/auth/forgot', { method: 'POST', body: JSON.stringify({ username }) });
+                const data = await api('/api/auth/forgot', { method: 'POST', body: JSON.stringify({ email }) });
                 showModal('ŞİFRE SIFIRLAMA', data.message, '🔑');
             } catch (err) { showModal('HATA', err.message, '❌'); }
         }
