@@ -26,6 +26,8 @@
         }
 
         #app-container {
+            width: 100vw;
+            max-width: 100vw;
             height: 100dvh;
             max-height: 100dvh;
         }
@@ -34,9 +36,10 @@
 
         @media (min-width: 768px) and (max-width: 1366px) {
             #app-container {
-                width: min(100vw, 560px);
-                border-radius: 2rem;
-                height: min(100dvh, 920px);
+                width: 100vw;
+                max-width: 100vw;
+                border-radius: 0;
+                height: 100dvh;
                 max-height: 100dvh;
             }
         }
@@ -213,12 +216,12 @@
 
 
         .home-tree-stage {
-            --tree-scale: 1.24;
+            --tree-scale: 1.38;
             position: absolute;
             left: 50%;
-            bottom: -1.15rem;
-            width: min(96vw, 26rem);
-            height: min(76dvh, 34rem);
+            bottom: 0.8rem;
+            width: min(98vw, 28rem);
+            height: min(82dvh, 38rem);
             display: flex;
             align-items: flex-end;
             justify-content: center;
@@ -228,10 +231,10 @@
             pointer-events: none;
         }
 
-        @media (max-height: 820px) { .home-tree-stage { --tree-scale: 1.12; bottom: -0.9rem; } }
-        @media (max-height: 720px) { .home-tree-stage { --tree-scale: 1.02; bottom: -0.65rem; } }
-        @media (max-height: 620px) { .home-tree-stage { --tree-scale: 0.88; bottom: -0.35rem; } }
-        @media (min-width: 768px) and (max-width: 1366px) { .home-tree-stage { --tree-scale: 1.36; bottom: -1.35rem; } }
+        @media (max-height: 820px) { .home-tree-stage { --tree-scale: 1.24; bottom: 0.55rem; } }
+        @media (max-height: 720px) { .home-tree-stage { --tree-scale: 1.12; bottom: 0.3rem; } }
+        @media (max-height: 620px) { .home-tree-stage { --tree-scale: 0.98; bottom: 0.1rem; } }
+        @media (min-width: 768px) and (max-width: 1366px) { .home-tree-stage { --tree-scale: 1.52; bottom: 1rem; } }
 
         @keyframes rise-gold {
             0% { transform: translateY(100%) scale(0.5); opacity: 0; }
@@ -312,7 +315,7 @@
                         0 4px 10px rgba(0,0,0,0.3);
             overflow: hidden;
             pointer-events: none;
-            z-index: 5;
+            z-index: 20;
             transition: border-color 0.3s ease, background 0.3s ease;
         }
         .bird-cage-ring {
@@ -324,7 +327,7 @@
             height: 14px;
             border: 3px solid #4ade80;
             border-radius: 50%;
-            z-index: 6;
+            z-index: 25;
             transition: border-color 0.3s ease;
         }
         .bird-cage-wires {
@@ -507,7 +510,7 @@
                 </div>
 
                 <div class="flex flex-col items-end gap-1.5">
-                    <div id="energy-badge" onclick="wakeUpBirds()" class="bg-gradient-to-r from-yellow-600 to-orange-500 border-2 border-amber-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer transition-transform">
+                    <div id="energy-badge" class="bg-gradient-to-r from-yellow-600 to-orange-500 border-2 border-amber-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md">
                         <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i>
                         <span id="energy-timer">04:30:00</span>
                     </div>
@@ -872,7 +875,7 @@
             const secs = String(totalSec % 60).padStart(2, '0');
             setText('energy-timer', `${hrs}:${mins}:${secs}`);
             const badge = document.getElementById('energy-badge');
-            if (badge) badge.className = totalSec < 3600 ? 'bg-gradient-to-r from-red-600 to-rose-500 border-2 border-red-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer transition-transform animate-pulse' : 'bg-gradient-to-r from-yellow-600 to-orange-500 border-2 border-amber-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer transition-transform';
+            if (badge) badge.className = totalSec < 3600 ? 'bg-gradient-to-r from-red-600 to-rose-500 border-2 border-red-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md animate-pulse' : 'bg-gradient-to-r from-yellow-600 to-orange-500 border-2 border-amber-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md';
             const sleep = document.getElementById('sleep-warning-banner');
             if (sleep) sleep.classList.toggle('hidden', totalSec > 0);
             renderShop();
@@ -1016,8 +1019,8 @@
         }
 
         function getBirdCageHTML(birdObj, isOwned) {
-            const inner = isOwned ? `<div class="text-4xl animate-bounce-slow drop-shadow-lg">${birdObj.icon}</div>` : `<div class="text-4xl grayscale opacity-30">${birdObj.icon}</div><i class="fa-solid fa-lock absolute text-yellow-400 text-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"></i>`;
-            return `<div class="bird-cage-container"><div class="bird-cage-ring ${isOwned ? '' : 'cage-locked-ring'}"></div><div class="bird-cage ${isOwned ? '' : 'cage-locked'}"><div class="bird-cage-wires ${isOwned ? '' : 'cage-locked-wires'}"><div class="cage-wire"></div><div class="cage-wire"></div><div class="cage-wire"></div></div></div><div class="relative z-10 flex items-center justify-center w-full h-full">${inner}</div></div>`;
+            const inner = isOwned ? `<div class="text-4xl animate-bounce-slow drop-shadow-lg">${birdObj.icon}</div>` : `<div class="text-4xl grayscale opacity-25">${birdObj.icon}</div><i class="fa-solid fa-lock absolute text-yellow-400 text-lg z-30 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"></i>`;
+            return `<div class="bird-cage-container"><div class="relative z-0 flex items-center justify-center w-full h-full">${inner}</div><div class="bird-cage-ring ${isOwned ? '' : 'cage-locked-ring'}"></div><div class="bird-cage ${isOwned ? '' : 'cage-locked'}"><div class="bird-cage-wires ${isOwned ? '' : 'cage-locked-wires'}"><div class="cage-wire"></div><div class="cage-wire"></div><div class="cage-wire"></div></div></div></div>`;
         }
 
         function renderHomeBirds() {
@@ -1147,26 +1150,22 @@
         }
 
         function renderReferralMenuPage() {
-            const code = currentActiveUser || 'demo';
-            const link = `https://robuxbirds.com/ref/${code}`;
+            const code = gameState.referralCode || currentActiveUser || 'DEMO';
             return `
                 <div class="wood-panel animate-fade-in !p-4 flex flex-col gap-4 max-h-[calc(100dvh-9rem)] overflow-y-auto hide-scrollbar text-center">
                     <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-300 to-amber-600 border-4 border-[#8a4f00] flex items-center justify-center shadow-xl text-3xl text-[#4a2610]"><i class="fa-solid fa-user-group"></i></div>
                     <h3 class="font-black text-2xl text-[#fec636] uppercase">Referans Sistemi</h3>
-                    <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed">Arkadaşlarını davet et, kayıt olduklarında iki tarafa da bonus Silver verilsin.</p>
+                    <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed">Arkadaşına sadece özel kodunu ver. Üye olurken Referans Kodu alanına manuel girsin.</p>
                     <div class="bg-[#3e210d] border-2 border-[#2b1709] rounded-2xl p-4 shadow-inner text-left">
                         <div class="text-[10px] text-slate-300 font-black uppercase mb-1">Referans Kodun</div>
                         <div class="text-[#fec636] text-lg font-black break-all">${code}</div>
                     </div>
                     <div class="bg-[#3e210d] border-2 border-[#2b1709] rounded-2xl p-4 shadow-inner text-left">
-                        <div class="text-[10px] text-slate-300 font-black uppercase mb-1">Davet Linki</div>
-                        <div class="text-white text-xs font-bold break-all">${link}</div>
+                        <div class="text-[10px] text-slate-300 font-black uppercase mb-1">Nasıl Kullanılır?</div>
+                        <div class="text-white text-xs font-bold leading-relaxed">1) Kodunu arkadaşına gönder.<br>2) Arkadaşın kayıt ekranındaki Referans Kodu alanına bu kodu yazar.<br>3) Geçerliyse iki hesaba da bonus Silver işlenir.</div>
                     </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="copyRefCode()" class="game-btn btn-primary w-full text-[10px] !px-2"><i class="fa-solid fa-copy"></i> KOD</button>
-                        <button onclick="copyRefLink()" class="game-btn btn-success w-full text-[10px] !px-2"><i class="fa-solid fa-link"></i> LİNK</button>
-                    </div>
-                    <div class="rounded-2xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed text-left"><i class="fa-solid fa-circle-info text-[#fec636] mr-1"></i> Referanslar e-posta hesabına göre güvenli biçimde server tarafında işlenir.</div>
+                    <button onclick="copyRefCode()" class="game-btn btn-primary w-full text-[10px] !px-2"><i class="fa-solid fa-copy"></i> REFERANS KODUNU KOPYALA</button>
+                    <div class="rounded-2xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed text-left"><i class="fa-solid fa-circle-info text-[#fec636] mr-1"></i> Link yok; sistem sadece manuel girilen kişiye özel kodla çalışır.</div>
                 </div>`;
         }
 
@@ -1222,8 +1221,7 @@
         function spawnSparkle() { const container = document.getElementById('sparkle-container'); if (!container) return; const particle = document.createElement('div'); particle.classList.add('sparkle-particle'); const size = Math.random() * 8 + 4; particle.style.width = `${size}px`; particle.style.height = `${size}px`; particle.style.left = `${Math.random() * 100}%`; particle.style.bottom = `${Math.random() * 40 + 10}px`; const duration = Math.random() * 3 + 2; particle.style.animation = `rise-gold ${duration}s ease-out forwards`; container.appendChild(particle); setTimeout(() => particle.remove(), duration * 1000); }
         setInterval(spawnSparkle, 750);
         function copyText(text, title = 'KOPYALANDI') { const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showModal(title, text, '📋'); }
-        function copyRefCode() { copyText(currentActiveUser || 'demo'); }
-        function copyRefLink() { copyText(`https://robuxbirds.com/ref/${currentActiveUser || 'demo'}`); }
+        function copyRefCode() { copyText(gameState.referralCode || currentActiveUser || 'DEMO'); }
         function copyToClipboard(text) { copyText(text); }
         function approveWithdrawal() { showModal('BİLGİ', 'Onay işlemi backend admin akışına bağlanabilir.', 'ℹ️'); }
         function rejectWithdrawal() { showModal('BİLGİ', 'Reddetme işlemi backend admin akışına bağlanabilir.', 'ℹ️'); }

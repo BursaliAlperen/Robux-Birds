@@ -192,6 +192,20 @@ function displayNameFromEmail(email) {
   return email.split('@')[0] || email;
 }
 
+function normalizeReferralCode(value) {
+  return String(value || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '');
+}
+
+function createReferralCode(email) {
+  const prefix = normalizeReferralCode(displayNameFromEmail(email)).slice(0, 8) || 'BIRD';
+  return `${prefix}-${crypto.randomBytes(3).toString('hex').toUpperCase()}`;
+}
+
+function ensureReferralCode(user) {
+  if (!user.referralCode) user.referralCode = createReferralCode(user.email || user.id || 'bird');
+  return user;
+}
+
 function userIdFrom(req) {
   return String(req.header('x-user-id') || '').trim().toLowerCase();
 }
@@ -211,6 +225,7 @@ function createDefaultUser(email, password, referredBy = '') {
     id: email,
     email,
     username: displayNameFromEmail(email),
+    referralCode: createReferralCode(email),
     passwordHash: hashPassword(password),
     sessionTokenHash: '',
     silver: 1500,
@@ -233,7 +248,7 @@ function createDefaultUser(email, password, referredBy = '') {
 
 function normalizeUser(user) {
   const normalized = {
-    ...user,
+    ...ensureReferralCode(user),
     silver: Number(user.silver || 0),
     robux: Number(user.robux || 0),
     eggs: Number(user.eggs || 0),
@@ -289,6 +304,21 @@ async function setUser(id, data) {
     return;
   }
   await db.collection(USERS_COLLECTION).doc(id).set(data, { merge: true });
+}
+
+async function findUserByReferralCode(referralCode) {
+  const code = normalizeReferralCode(referralCode);
+  if (!code) return null;
+  if (memoryMode) {
+    for (const user of memoryStore.users.values()) {
+      if (!user.systemDoc && normalizeReferralCode(user.referralCode) === code) return normalizeUser(user);
+    }
+    return null;
+  }
+  const snap = await db.collection(USERS_COLLECTION).where('referralCode', '==', code).limit(1).get();
+  if (snap.empty) return null;
+  const doc = snap.docs[0];
+  return normalizeUser({ ...doc.data(), id: doc.id });
 }
 
 async function requireUser(req, res, next) {
@@ -367,19 +397,18 @@ app.post('/api/auth/signup', async (req, res, next) => {
   try {
     const email = assertValidEmail(req.body.email || req.body.username);
     const password = assertValidPassword(req.body.password);
-    const refCode = normalizeEmail(req.body.refCode);
+    const refCode = normalizeReferralCode(req.body.refCode);
     const id = email;
     if (await getUser(id)) return res.status(409).json({ error: 'Bu e-posta ile kayıtlı hesap zaten var.' });
 
     const user = createDefaultUser(email, password, refCode);
-    if (refCode && refCode !== id) {
-      const referrer = await getUser(refCode);
-      if (referrer) {
+    if (refCode && refCode !== user.referralCode) {
+      const referrer = await findUserByReferralCode(refCode);
+      if (referrer && referrer.id !== id) {
         user.silver += 500;
-        const normalizedReferrer = normalizeUser(referrer);
-        normalizedReferrer.silver += 500;
-        pushHistory(normalizedReferrer, { title_TR: `Referans Bonusu (${email})`, title_EN: `Referral Bonus (${email})`, change: '+500 S', type: 'plus' });
-        await setUser(refCode, normalizedReferrer);
+        referrer.silver += 500;
+        pushHistory(referrer, { title_TR: `Referans Bonusu (${email})`, title_EN: `Referral Bonus (${email})`, change: '+500 S', type: 'plus' });
+        await setUser(referrer.id, referrer);
       }
     }
     await setUser(id, user);
