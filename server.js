@@ -563,19 +563,18 @@ app.post('/api/tasks/social/complete', requireUser, async (req, res, next) => {
 
 app.post('/api/withdrawals', requireUser, async (req, res, next) => {
   try {
-    const amount = assertAmount(req.body.amount, 100, 'Gümüş');
+    const amount = assertAmount(req.body.amount, 20, 'Robux');
     const robloxUsername = String(req.body.robloxUsername || '').trim();
     if (!robloxUsername) return res.status(400).json({ error: 'Roblox kullanıcı adı zorunlu.' });
-    if (amount > req.user.silver) return res.status(400).json({ error: 'Yetersiz gümüş bakiyesi.' });
-    const robux = Math.floor(amount / 100);
-    if (req.user.dailyRobuxWithdrawn + robux > DAILY_ROBUX_LIMIT) {
+    if (amount > req.user.robux) return res.status(400).json({ error: 'Yetersiz Robux bakiyesi.' });
+    if (req.user.dailyRobuxWithdrawn + amount > DAILY_ROBUX_LIMIT) {
       return res.status(400).json({ error: `Günlük limit aşıldı. Kalan hakkınız: ${DAILY_ROBUX_LIMIT - req.user.dailyRobuxWithdrawn} R$.` });
     }
-    req.user.silver -= amount;
-    req.user.dailyRobuxWithdrawn += robux;
+    req.user.robux -= amount;
+    req.user.dailyRobuxWithdrawn += amount;
     const id = `TX-${crypto.randomInt(100000, 999999)}`;
-    await setWithdrawal(id, { id, userId: req.userId, username: robloxUsername, amount, robux, status: 'pending', time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }), createdAt: now() });
-    pushHistory(req.user, { title_TR: `Çekim Talebi (${robloxUsername})`, title_EN: `Withdrawal Request (${robloxUsername})`, change: `-${amount} S`, type: 'minus' });
+    await setWithdrawal(id, { id, userId: req.userId, username: robloxUsername, amount, robux: amount, status: 'pending', time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }), createdAt: now() });
+    pushHistory(req.user, { title_TR: `Çekim Talebi (${robloxUsername})`, title_EN: `Withdrawal Request (${robloxUsername})`, change: `-${amount} R$`, type: 'minus' });
     await setUser(req.userId, req.user);
     res.json({ user: publicUser(req.user), withdrawals: await getWithdrawals() });
   } catch (err) {

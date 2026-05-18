@@ -72,6 +72,17 @@
             color: white;
             transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+        .premium-card {
+            background: linear-gradient(165deg, rgba(80,41,19,0.95), rgba(43,20,7,0.92));
+            border: 2px solid #5b2f14;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 8px 18px rgba(0,0,0,0.35);
+            border-radius: 1rem;
+        }
+        .input-premium {
+            background: linear-gradient(180deg, #2e180c 0%, #211007 100%);
+            border: 2px solid #1c0d04;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.45);
+        }
 
         .wood-panel-inner {
             background: rgba(43, 20, 7, 0.4);
@@ -1135,14 +1146,14 @@
                         <p class="text-[11px] text-[#fde0bd] font-bold">Enter your Roblox username and create a secure payout request with your Silver balance.</p>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
-                        <div class="stat-box p-3 text-center"><div class="text-[9px] text-slate-300 font-black uppercase">Silver</div><div class="text-white font-black">${Math.floor(gameState.silver || 0).toLocaleString()} S</div></div>
+                        <div class="stat-box p-3 text-center"><div class="text-[9px] text-slate-300 font-black uppercase">Robux</div><div class="text-white font-black">${Math.floor(gameState.robux || 0).toLocaleString()} R$</div></div>
                         <div class="stat-box p-3 text-center"><div class="text-[9px] text-slate-300 font-black uppercase">Daily Left</div><div class="text-emerald-300 font-black">${remaining} R$</div></div>
                     </div>
-                    <div class="bg-[#3e210d] rounded-2xl p-4 border-2 border-[#2b1709] flex flex-col gap-3 shadow-inner">
+                    <div class="premium-card p-4 flex flex-col gap-3">
                         <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Roblox Username</label>
-                        <input type="text" id="target-roblox-username" placeholder="Örn: RobloxGamerPro" class="w-full bg-[#2b1709] border-2 border-[#1c0d04] rounded-xl p-3 text-sm text-white font-bold outline-none">
-                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Silver to Spend</label>
-                        <input type="number" id="withdraw-amount" placeholder="Min: 100" class="w-full bg-[#2b1709] border-2 border-[#1c0d04] rounded-xl p-3 text-sm text-white font-bold outline-none">
+                        <input type="text" id="target-roblox-username" placeholder="Örn: RobloxGamerPro" class="input-premium w-full rounded-xl p-3 text-sm text-white font-bold outline-none">
+                        <label class="text-[10px] text-[#ffe8cb] font-black uppercase">Çekilecek Robux</label>
+                        <input type="number" id="withdraw-amount" placeholder="Min: 20 R$" class="input-premium w-full rounded-xl p-3 text-sm text-white font-bold outline-none">
                         <div class="rounded-xl bg-black/20 p-3 text-[10px] text-[#fde0bd] font-bold leading-relaxed"><i class="fa-solid fa-shield-halved text-emerald-300 mr-1"></i> Your Roblox password is never requested. The request goes into the admin queue and is recorded server-side.</div>
                     </div>
                     <button onclick="withdrawRobux()" class="game-btn btn-success w-full text-xs">CREATE REQUEST <i class="fa-solid fa-paper-plane"></i></button>
@@ -1199,7 +1210,7 @@
             else if (page === 'withdraw') area.innerHTML = renderWithdrawMenuPage();
             else if (page === 'referral') area.innerHTML = renderReferralMenuPage();
             else if (page === 'history') area.innerHTML = renderHistoryMenuPage();
-            else if (page === 'admin') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-3"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-user-gear mr-1"></i> Admin</h3><div class="flex bg-[#2b1407]/40 p-1 rounded-xl border border-[#3c1e0a] gap-1"><button onclick="switchAdminTab('withdrawals')" id="admin-tab-btn-withdrawals" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Withdrawals</button><button onclick="switchAdminTab('tasks')" id="admin-tab-btn-tasks" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Tasks</button></div><div id="admin-pane-withdrawals" class="admin-tab-pane flex flex-col gap-2 max-h-[260px] overflow-y-auto">${pendingWithdrawals.map(p => `<div class="bg-[#3e210d] p-2 rounded-xl text-xs text-white"><b>@${p.username}</b> • ${p.amount} S ➔ ${p.robux} R$ <span class="text-amber-300">${p.status}</span></div>`).join('') || '<p class="text-xs text-gray-300">No pending requests.</p>'}</div><div id="admin-pane-tasks" class="admin-tab-pane hidden flex flex-col gap-2"><input id="admin-task-title-tr" placeholder="Task Title TR" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-title-en" placeholder="Quest Title EN" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-reward" type="number" placeholder="Reward S" class="bg-[#3e210d] p-2 rounded text-xs text-white"><select id="admin-task-platform" class="bg-[#3e210d] p-2 rounded text-xs text-white"><option value="youtube">YouTube</option><option value="telegram">Telegram</option><option value="twitter">Twitter</option><option value="instagram">Instagram</option><option value="default">Other</option></select><input id="admin-task-link" placeholder="https://..." class="bg-[#3e210d] p-2 rounded text-xs text-white"><button onclick="adminAddNewSocialTask()" class="game-btn btn-success w-full text-xs">Publish Task</button></div></div>`;
+            else if (page === 'admin') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-3"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-user-gear mr-1"></i> Admin</h3><div class="flex bg-[#2b1407]/40 p-1 rounded-xl border border-[#3c1e0a] gap-1"><button onclick="switchAdminTab('withdrawals')" id="admin-tab-btn-withdrawals" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Withdrawals</button><button onclick="switchAdminTab('tasks')" id="admin-tab-btn-tasks" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Tasks</button></div><div id="admin-pane-withdrawals" class="admin-tab-pane flex flex-col gap-2 max-h-[260px] overflow-y-auto">${pendingWithdrawals.map(p => `<div class="bg-[#3e210d] p-2 rounded-xl text-xs text-white"><b>@${p.username}</b> • ${p.amount} R$ <span class="text-amber-300">${p.status}</span></div>`).join('') || '<p class="text-xs text-gray-300">No pending requests.</p>'}</div><div id="admin-pane-tasks" class="admin-tab-pane hidden flex flex-col gap-2"><input id="admin-task-title-tr" placeholder="Task Title TR" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-title-en" placeholder="Quest Title EN" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-reward" type="number" placeholder="Reward S" class="bg-[#3e210d] p-2 rounded text-xs text-white"><select id="admin-task-platform" class="bg-[#3e210d] p-2 rounded text-xs text-white"><option value="youtube">YouTube</option><option value="telegram">Telegram</option><option value="twitter">Twitter</option><option value="instagram">Instagram</option><option value="default">Other</option></select><input id="admin-task-link" placeholder="https://..." class="bg-[#3e210d] p-2 rounded text-xs text-white"><button onclick="adminAddNewSocialTask()" class="game-btn btn-success w-full text-xs">Publish Task</button></div></div>`;
             if (page === 'convert') switchConvertTab(currentConvertTab);
             if (page === 'admin') switchAdminTab(currentAdminTab);
         }
