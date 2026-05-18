@@ -213,23 +213,25 @@
 
 
         .home-tree-stage {
-            --tree-scale: 0.92;
+            --tree-scale: 1.82;
             position: absolute;
             left: 50%;
-            bottom: clamp(0.25rem, 2vh, 1.25rem);
-            width: min(92vw, 24rem);
-            height: min(62dvh, 27rem);
+            bottom: -3.25rem;
+            width: min(96vw, 26rem);
+            height: min(82dvh, 38rem);
             display: flex;
             align-items: flex-end;
             justify-content: center;
             transform: translateX(-50%) scale(var(--tree-scale));
             transform-origin: bottom center;
             will-change: auto;
+            pointer-events: none;
         }
 
-        @media (max-height: 740px) { .home-tree-stage { --tree-scale: 0.78; bottom: 0; } }
-        @media (max-height: 640px) { .home-tree-stage { --tree-scale: 0.66; } }
-        @media (min-width: 768px) and (max-width: 1366px) { .home-tree-stage { --tree-scale: 1.02; } }
+        @media (max-height: 820px) { .home-tree-stage { --tree-scale: 1.58; bottom: -2.75rem; } }
+        @media (max-height: 720px) { .home-tree-stage { --tree-scale: 1.38; bottom: -2.25rem; } }
+        @media (max-height: 620px) { .home-tree-stage { --tree-scale: 1.16; bottom: -1.75rem; } }
+        @media (min-width: 768px) and (max-width: 1366px) { .home-tree-stage { --tree-scale: 2; bottom: -3.5rem; } }
 
         @keyframes rise-gold {
             0% { transform: translateY(100%) scale(0.5); opacity: 0; }
@@ -513,10 +515,10 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto overflow-x-hidden pb-28 z-10 hide-scrollbar relative p-4">
+            <main id="game-main" class="flex-1 overflow-y-auto overflow-x-hidden pb-28 z-10 hide-scrollbar relative p-4">
                 
                 <!-- HOME VIEW (AAA BEAUTIFUL CSS TREE) -->
-                <div id="view-home" class="view hidden relative h-full min-h-[calc(100dvh-11rem)] overflow-hidden">
+                <div id="view-home" class="view hidden relative h-full min-h-[calc(100dvh-10rem)] overflow-hidden touch-none">
                     <div class="absolute top-1 left-0 right-0 text-center z-30">
                         <div id="farm-owner-badge" class="bg-black/40 text-[#ffe5be] px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-amber-900/40"></div>
                     </div>
@@ -1058,6 +1060,12 @@
         function switchTab(tab) {
             document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
             document.getElementById(`view-${tab}`).classList.remove('hidden');
+            const gameMain = document.getElementById('game-main');
+            if (gameMain) {
+                gameMain.classList.toggle('overflow-y-auto', tab !== 'home');
+                gameMain.classList.toggle('overflow-y-hidden', tab === 'home');
+                gameMain.scrollTop = 0;
+            }
             ['shop', 'tasks', 'warehouse'].forEach(key => document.getElementById(`nav-${key}`)?.classList.remove('active'));
             document.getElementById('nav-home-btn').classList.remove('active');
             document.getElementById('nav-home-text').classList.remove('text-[#fec636]');
