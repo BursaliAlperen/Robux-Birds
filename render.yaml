@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: robux-birds
+    env: node
+    rootDir: .
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: FIREBASE_CREDENTIALS
+        sync: false
+      - key: ADMIN_USER_IDS
+        sync: false
+      - key: KEEP_ALIVE_URL
+        sync: false
+      - key: KEEP_ALIVE_INTERVAL_MS
+        value: "840000"
