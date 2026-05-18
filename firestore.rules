@@ -1,0 +1,11 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Robux Birds uses only the Firebase Admin SDK in server.js.
+    // The browser must never read/write Firestore directly.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

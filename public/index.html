@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Robux Birds - AAA Premium Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght=400;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* --- AAA DETAILED WOOD UI & GRADIENTS --- */
+        .wood-texture {
+            background: radial-gradient(circle at center, #b0693a 0%, #7d441e 100%);
+            box-shadow: inset 0 6px 12px rgba(255, 255, 255, 0.2), 
+                        inset 0 -6px 12px rgba(0, 0, 0, 0.4), 
+                        0 12px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .wood-panel {
+            background-color: #8f5129;
+            border: 6px solid #4a2610;
+            border-radius: 1.75rem;
+            box-shadow: inset 0 4px 0 rgba(255,255,255,0.2), 
+                        inset 0 -4px 0 rgba(0,0,0,0.3), 
+                        0 8px 16px rgba(0,0,0,0.45);
+            position: relative;
+            color: white;
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .wood-panel-inner {
+            background: rgba(43, 20, 7, 0.4);
+            border-radius: 1.25rem;
+            border: 3px solid #3c1e0a;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .wood-panel-title {
+            position: absolute;
+            top: -1.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(to bottom, #8a4a20, #5c2d11);
+            border: 4px solid #361807;
+            padding: 0.5rem 2rem;
+            border-radius: 1rem;
+            color: #ffe8b5;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            font-size: 1rem;
+            box-shadow: 0 6px 10px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        /* --- BUTTONS WITH DEPTH & GLOW --- */
+        .game-btn {
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 1.25rem;
+            transition: all 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            position: relative;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.4);
+            padding: 0.85rem 1.75rem;
+        }
+        .game-btn:active {
+            transform: translateY(4px);
+            border-bottom-width: 2px !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+        }
+        .game-btn:disabled {
+            filter: grayscale(0.8);
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            border-bottom-width: 6px !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to bottom, #ffe066, #f59e0b);
+            color: #4a2610;
+            border: 2px solid #fff399;
+            border-bottom: 7px solid #b47100;
+            box-shadow: 0 6px 12px rgba(245, 158, 11, 0.3), inset 0 2px 3px rgba(255,255,255,0.4);
+        }
+        .btn-success {
+            background: linear-gradient(to bottom, #54f38d, #10b981);
+            color: white;
+            border: 2px solid #a7ffd0;
+            border-bottom: 7px solid #065f46;
+            box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3), inset 0 2px 3px rgba(255,255,255,0.4);
+        }
+        .btn-wood {
+            background: linear-gradient(to bottom, #bd7e53, #8a4f29);
+            color: #ffe0bf;
+            border: 2px solid #e3a87f;
+            border-bottom: 7px solid #3d1b06;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2), inset 0 2px 3px rgba(255,255,255,0.3);
+        }
+        .btn-danger {
+            background: linear-gradient(to bottom, #ff7e7e, #ef4444);
+            color: white;
+            border: 2px solid #ffa3a3;
+            border-bottom: 7px solid #991b1b;
+            box-shadow: 0 6px 12px rgba(239, 68, 68, 0.3), inset 0 2px 3px rgba(255,255,255,0.4);
+        }
+
+        /* --- STATS DISPLAY --- */
+        .stat-box {
+            background: linear-gradient(to bottom, #42200b, #261104);
+            border: 3px solid #6b3a1a;
+            border-radius: 1rem;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.6);
+        }
+
+        /* --- SMOOTH ANIMATIONS & PERFORMANCE OPTIMIZATIONS --- */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .view {
+            transition: opacity 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform, opacity;
+        }
+        .view.hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.97);
+        }
+        
+        @keyframes fade-in { 
+            from { opacity: 0; transform: scale(0.96); } 
+            to { opacity: 1; transform: scale(1); } 
+        }
+        .animate-fade-in { animation: fade-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+        
+        @keyframes slide-left { 
+            from { transform: translateX(100%); } 
+            to { transform: translateX(0); } 
+        }
+        .animate-slide-left { animation: slide-left 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) forwards; }
+        
+        @keyframes bounce-smooth { 
+            0% { transform: translateY(-5px) rotate(-0.5deg); } 
+            50% { transform: translateY(5px) rotate(0.5deg); } 
+            100% { transform: translateY(-5px) rotate(-0.5deg); } 
+        }
+        .animate-bounce-slow { 
+            animation: bounce-smooth 4.5s ease-in-out infinite; 
+            will-change: transform;
+        }
+
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 15px rgba(254, 198, 54, 0.2); } 50% { box-shadow: 0 0 25px rgba(254, 198, 54, 0.5); } }
+        .pulse-glow { animation: pulse-glow 2.5s infinite ease-in-out; }
+
+        @keyframes cloud-drift-left {
+            0% { transform: translateX(450px); }
+            100% { transform: translateX(-200px); }
+        }
+        @keyframes cloud-drift-right {
+            0% { transform: translateX(-200px); }
+            100% { transform: translateX(450px); }
+        }
+        .cloud-left { animation: cloud-drift-left 40s linear infinite; }
+        .cloud-right { animation: cloud-drift-right 50s linear infinite; }
+
+
+        @keyframes bird-tree-drift {
+            0% { transform: translateX(110%); }
+            100% { transform: translateX(-130%); }
+        }
+        .bird-tree-drift {
+            animation: bird-tree-drift 18s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes rise-gold {
+            0% { transform: translateY(100%) scale(0.5); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-220px) scale(1.3); opacity: 0; }
+        }
+        .sparkle-particle {
+            position: absolute;
+            background: radial-gradient(circle, #fec636 20%, transparent 80%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .grass-bg {
+            clip-path: polygon(0 22%, 100% 12%, 100% 100%, 0 100%);
+        }
+
+        /* --- TREE, BRANCHES, AND CAGES CSS --- */
+        .tree-trunk {
+            background-image: 
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 2px, transparent 2px, transparent 8px),
+                linear-gradient(90deg, #1f0d05 0%, #3e1e0d 20%, #542b15 50%, #3e1e0d 80%, #1a0a03 100%);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.6);
+        }
+        .tree-branch {
+            position: absolute;
+            height: 16px;
+            background: linear-gradient(to bottom, #6b3a1a, #3e210d);
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.1);
+        }
+        .branch-left {
+            right: 50%;
+            transform-origin: right center;
+        }
+        .branch-right {
+            left: 50%;
+            transform-origin: left center;
+        }
+        .leaf-cluster {
+            background: radial-gradient(circle at 30% 30%, #4ade80, #166534);
+            box-shadow: inset 0 -5px 15px rgba(0,0,0,0.4), 0 10px 20px rgba(0,0,0,0.3);
+            border-radius: 50%;
+        }
+        .nail {
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #d1d5db, #374151);
+            border-radius: 50%;
+            box-shadow: 1px 2px 3px rgba(0,0,0,0.8), inset -1px -1px 2px rgba(0,0,0,0.6);
+            z-index: 20;
+        }
+        @keyframes swing {
+            0%, 100% { transform: rotate(-4deg); }
+            50% { transform: rotate(4deg); }
+        }
+        .cage-swing {
+            transform-origin: top center;
+            animation: swing 6s ease-in-out infinite;
+        }
+
+        .bird-cage-container {
+            position: relative;
+            width: 80px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bird-cage {
+            position: absolute;
+            inset: 0;
+            border: 3px solid #4ade80; 
+            border-radius: 50% 50% 15% 15% / 40% 40% 15% 15%;
+            background: rgba(74, 222, 128, 0.08); 
+            box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.2), 
+                        0 4px 10px rgba(0,0,0,0.3);
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 5;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+        .bird-cage-ring {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            border: 3px solid #4ade80;
+            border-radius: 50%;
+            z-index: 6;
+            transition: border-color 0.3s ease;
+        }
+        .bird-cage-wires {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: space-evenly;
+            pointer-events: none;
+        }
+        .cage-wire {
+            width: 1px;
+            height: 100%;
+            background-color: rgba(74, 222, 128, 0.4);
+            transition: background-color 0.3s ease;
+        }
+        .cage-locked { border-color: #6b7280 !important; background: rgba(0, 0, 0, 0.55) !important; }
+        .cage-locked-ring { border-color: #6b7280 !important; }
+        .cage-locked-wires .cage-wire { background-color: rgba(107, 114, 128, 0.3) !important; }
+
+        /* Premium Input styling */
+        .premium-input {
+            background-color: #3e210d;
+            border: 3px solid #261104;
+            color: #ffffff;
+            font-weight: 700;
+            border-radius: 1rem;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            width: 100%;
+            transition: border-color 0.2s ease;
+        }
+        .premium-input:focus { border-color: #fec636; outline: none; }
+        
+        .nav-item { transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .nav-item.active { transform: translateY(-10px); color: #fec636 !important; }
+        .nav-item.active .nav-icon { color: #fec636 !important; filter: drop-shadow(0 2px 4px rgba(254,198,54,0.4)); }
+        
+        .center-nav-btn { transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .center-nav-btn.active { transform: scale(1.15) translateY(-5px); background: linear-gradient(to bottom, #ffe066, #f59e0b); border-color: #b47100; color: #4a2610 !important; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4); }
+
+        .shimmer { position: relative; overflow: hidden; }
+        .shimmer::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 70%, transparent);
+            transform: rotate(45deg); transition: all 0.5s; animation: shine 4s infinite ease-in-out;
+        }
+        @keyframes shine {
+            0% { transform: translate(-30%, -30%) rotate(45deg); }
+            100% { transform: translate(130%, 130%) rotate(45deg); }
+        }
+    </style>
+</head>
+<body class="h-screen w-full bg-slate-950 overflow-hidden flex justify-center items-center">
+
+    <!-- APP CONTAINER -->
+    <div id="app-container" class="w-full max-w-md h-full bg-gradient-to-b from-[#4cb2e6] via-[#75c6eb] to-[#a2d8f0] relative flex flex-col shadow-[0_0_80px_rgba(0,0,0,0.8)] overflow-hidden">
+        
+        <!-- PARALLAX BACKGROUND CLOUDS -->
+        <div class="absolute top-12 left-0 w-32 h-10 bg-white/40 rounded-full blur-sm cloud-left"></div>
+        <div class="absolute top-24 right-0 w-48 h-14 bg-white/40 rounded-full blur-sm cloud-right"></div>
+        
+        <!-- Sparkle Container -->
+        <div id="sparkle-container" class="absolute inset-0 pointer-events-none z-10"></div>
+
+        <!-- Grass & Ground Layer -->
+        <div class="absolute bottom-0 left-0 right-0 h-52 bg-gradient-to-b from-[#8ade54] to-[#4c9d1a] grass-bg z-0"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-14 bg-[#4a2610] z-0 border-t-4 border-[#3c1e0a]"></div>
+
+        <!-- 1. AAA AUTHENTICATION SCREEN -->
+        <div id="screen-auth" class="absolute inset-0 z-50 bg-gradient-to-b from-[#2573a4] to-[#5aa7d1] flex flex-col justify-center items-center p-6 animate-fade-in">
+            <div class="absolute inset-0 opacity-15 pointer-events-none animate-pulse" style="background-image: radial-gradient(circle at 50% 50%, white 2px, transparent 2px); background-size: 30px 30px;"></div>
+            
+            <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-50">
+                <button onclick="toggleLanguage()" id="auth-lang-btn" class="w-10 h-10 bg-gradient-to-b from-[#ef4444] to-[#b91c1c] border-2 border-[#7f1d1d] rounded-xl flex items-center justify-center shadow-md active:scale-95 transition-transform text-white font-black text-xs">EN</button>
+                <button onclick="showHowItWorks()" class="bg-gradient-to-b from-[#ffe066] to-[#f59e0b] border-2 border-[#b47100] rounded-xl p-2 px-3 text-[#4a2610] font-black text-xs flex items-center gap-1 shadow-lg hover:scale-105 active:scale-95 transition-transform">
+                    <i class="fa-solid fa-circle-question"></i> <span data-i18n="howItWorks">Nasıl Çalışır?</span>
+                </button>
+            </div>
+
+            <div class="wood-panel w-full max-w-sm flex flex-col gap-5 shadow-[0_24px_60px_rgba(0,0,0,0.6)] p-5 pt-10 z-10">
+                <div class="wood-panel-title" data-i18n="title">ROBUX BIRDS</div>
+                
+                <div class="flex bg-[#2b1407]/40 p-1.5 rounded-xl border border-[#3c1e0a]">
+                    <button onclick="switchAuthTab('login')" id="tab-btn-login" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-white bg-[#8a4a20] border border-[#361807]" data-i18n="tabLogin">GİRİŞ YAP</button>
+                    <button onclick="switchAuthTab('signup')" id="tab-btn-signup" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-gray-400" data-i18n="tabSignup">KAYIT OL</button>
+                    <button onclick="switchAuthTab('forgot')" id="tab-btn-forgot" class="flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-gray-400" data-i18n="tabForgot">ŞİFREMİ UNUTTUM</button>
+                </div>
+
+                <div id="tab-content-login" class="auth-tab flex flex-col gap-4">
+                    <div class="text-center">
+                        <p class="text-[#fde0bd] font-bold text-xs" data-i18n="loginSub">Kuş yetiştir, yumurtaları topla, gerçek Robux kazan!</p>
+                    </div>
+                    <div class="flex flex-col gap-3 wood-panel-inner p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="login-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                        </div>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="login-password" type="password" placeholder="Oyun Şifresi" data-i18n-placeholder="passwordPlh" class="premium-input text-sm">
+                        </div>
+                    </div>
+                    <button onclick="authLogin()" class="game-btn btn-primary text-md py-3 mt-1 shimmer">
+                        <span data-i18n="startBtn">BAŞLA</span> <i class="fa-solid fa-circle-play"></i>
+                    </button>
+                </div>
+
+                <div id="tab-content-signup" class="auth-tab hidden flex flex-col gap-4 animate-fade-in">
+                    <div class="text-center">
+                        <p class="text-[#fde0bd] font-bold text-xs" data-i18n="signupSub">Hemen ücretsiz üye ol, bonus hediyelerle başla!</p>
+                    </div>
+                    <div class="flex flex-col gap-3 wood-panel-inner p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="signup-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                        </div>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="signup-password" type="password" placeholder="Yeni Oyun Şifresi" data-i18n-placeholder="newPasswordPlh" class="premium-input text-sm">
+                        </div>
+                        <div class="relative">
+                            <i class="fa-solid fa-user-plus absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="signup-referral" type="text" placeholder="Referans Kodu (İsteğe Bağlı)" data-i18n-placeholder="refCodePlh" class="premium-input text-sm">
+                        </div>
+                    </div>
+                    <button onclick="authSignup()" class="game-btn btn-success text-md py-3 mt-1 shimmer">
+                        <span data-i18n="registerBtn">KAYIT OL</span> <i class="fa-solid fa-user-check"></i>
+                    </button>
+                </div>
+
+                <div id="tab-content-forgot" class="auth-tab hidden flex flex-col gap-4 animate-fade-in">
+                    <div class="text-center">
+                        <p class="text-[#fde0bd] font-bold text-xs" data-i18n="forgotSub">Kullanıcı adınızı girerek şifrenizi sıfırlayın.</p>
+                    </div>
+                    <div class="flex flex-col gap-3 wood-panel-inner p-3">
+                        <div class="relative">
+                            <i class="fa-solid fa-envelope-circle-check absolute left-3 top-1/2 -translate-y-1/2 text-orange-800 text-sm"></i>
+                            <input id="forgot-email" type="email" inputmode="email" autocomplete="email" placeholder="E-posta Adresi" data-i18n-placeholder="usernamePlh" class="premium-input text-sm">
+                        </div>
+                    </div>
+                    <button onclick="authForgotPassword()" class="game-btn btn-wood text-md py-3 mt-1">
+                        <span data-i18n="resetBtn">ŞİFREYİ SIFIRLA</span> <i class="fa-solid fa-key"></i>
+                    </button>
+                </div>
+
+                <div class="bg-red-950/40 border-2 border-red-800/60 p-3 rounded-xl text-center">
+                    <p class="text-xs font-black text-red-200 uppercase tracking-wider" data-i18n="securityAlertTitle"><i class="fa-solid fa-shield-halved text-red-400 mr-1"></i> Şifre Güvenlik Uyarısı</p>
+                    <p class="text-[10px] text-red-300 font-bold mt-1" data-i18n="securityAlertText">Roblox şifreniz KESİNLİKLE istenmez! Sadece buradaki profiliniz için bağımsız bir şifre belirleyin.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. MAIN GAME UI -->
+        <div id="screen-game" class="hidden flex-col h-full z-10 relative">
+            
+            <header class="pt-6 px-4 pb-2 flex justify-between items-start z-20 relative">
+                <div class="wood-panel !p-2 flex flex-col gap-1 min-w-[170px] !border-[4px] !rounded-2xl">
+                    <div class="flex items-center justify-between gap-3 px-1">
+                        <span class="text-xs font-black text-green-300 uppercase">Robux:</span>
+                        <div class="flex items-center gap-1 font-black text-green-400 drop-shadow-md">
+                            <div class="w-6 h-6 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full border-2 border-emerald-700 flex items-center justify-center shadow-md"><span class="text-[9px] font-black text-white">R$</span></div>
+                            <span id="ui-robux" class="text-sm font-black text-emerald-300">0</span>
+                        </div>
+                    </div>
+                    <div class="h-[2px] bg-[#3c1e0a]"></div>
+                    <div class="flex items-center justify-between gap-3 px-1">
+                        <span class="text-xs font-black text-slate-300 uppercase" data-i18n="silverLabel">Gümüş:</span>
+                        <div class="flex items-center gap-1 font-black text-gray-200 drop-shadow-md">
+                            <div class="w-6 h-6 bg-gradient-to-r from-gray-300 to-slate-400 rounded-full border-2 border-gray-500 flex items-center justify-center shadow-md"><span class="text-xs text-slate-800 font-bold">S</span></div>
+                            <span id="ui-silver" class="text-sm">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end gap-1.5">
+                    <div id="energy-badge" onclick="wakeUpBirds()" class="bg-gradient-to-r from-yellow-600 to-orange-500 border-2 border-amber-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer transition-transform">
+                        <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i>
+                        <span id="energy-timer">04:30:00</span>
+                    </div>
+                    <button onclick="toggleLanguage()" id="game-lang-btn" class="w-12 h-8 bg-gradient-to-b from-[#ef4444] to-[#b91c1c] border-2 border-[#7f1d1d] rounded-xl flex items-center justify-center shadow-lg active:scale-95 transition-transform text-white font-extrabold text-xs">EN</button>
+                </div>
+            </header>
+
+            <main class="flex-1 overflow-y-auto overflow-x-hidden pb-28 z-10 hide-scrollbar relative p-4">
+                
+                <!-- HOME VIEW (AAA BEAUTIFUL CSS TREE) -->
+                <div id="view-home" class="view hidden flex flex-col items-center justify-between py-2 relative min-h-[58vh]">
+                    <div class="text-center">
+                        <div id="farm-owner-badge" class="bg-black/40 text-[#ffe5be] px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest border border-amber-900/40"></div>
+                    </div>
+                    
+                    <!-- ADVANCED CSS TREE RENDERING -->
+                    <div class="w-full max-w-sm flex-1 relative flex flex-col items-center justify-start pb-4 bird-tree-drift" id="bird-tree">
+                        <!-- Rendered via JS to support layer depth -->
+                    </div>
+
+                    <div id="sleep-warning-banner" class="hidden w-full max-w-xs bg-amber-950/80 border-2 border-yellow-600 rounded-xl p-2.5 text-center mb-4 text-white font-bold text-[11px] animate-pulse">
+                        <i class="fa-solid fa-moon text-yellow-400 mr-1"></i> <span data-i18n="birdsSleeping">Kuşlar yoruldu ve uykuya geçti! Devam etmek için yem verin.</span>
+                        <button onclick="wakeUpBirds()" class="bg-yellow-500 text-yellow-950 rounded p-1 px-3 mt-1.5 block mx-auto font-black text-[10px] border-b-2 border-yellow-700 active:scale-95 transition-all uppercase" data-i18n="wakeUpLabel">YEM VER & UYANDIR</button>
+                    </div>
+
+                </div>
+
+                <!-- SHOP VIEW -->
+                <div id="view-shop" class="view hidden flex flex-col gap-4 pb-4 animate-fade-in">
+                    <h2 class="text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] text-center my-1 uppercase" data-i18n="shopTitle">Kuş Pazarı</h2>
+                    <div id="shop-list" class="flex flex-col gap-4"></div>
+                </div>
+
+                <!-- WAREHOUSE VIEW (COLLECT FROM WAREHOUSE ONLY) -->
+                <div id="view-warehouse" class="view hidden flex flex-col items-center justify-center h-full min-h-[55vh] animate-fade-in relative">
+                    <h2 class="absolute top-0 text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] uppercase" data-i18n="warehouseTitle">Yumurta Deposu</h2>
+                    
+                    <div class="relative w-full max-w-sm mt-12">
+                        <div class="wood-panel text-center pt-12 pb-6 px-4 flex flex-col items-center gap-5">
+                            <div class="absolute -top-14 text-8xl drop-shadow-2xl">🛖</div>
+                            
+                            <div class="bg-[#3e210d] border-4 border-[#2b1709] rounded-2xl w-full p-4 shadow-inner">
+                                <div class="text-[#fde0bd] font-bold text-xs mb-1 uppercase tracking-wider" data-i18n="uncollectedEggs">Depoda Biriken Yumurtalar</div>
+                                <div class="text-4xl font-black text-white flex items-center justify-center gap-2">
+                                    🥚 <span id="depo-uncollected">0</span>
+                                </div>
+                            </div>
+                            <button onclick="collectEggsFromWarehouse()" id="warehouse-collect-btn" class="game-btn btn-success w-full text-base">
+                                <i class="fa-solid fa-basket-shopping"></i> <span data-i18n="collectAllBtn">YUMURTALARI TOPLA</span>
+                            </button>
+                            <p class="text-[11px] text-[#fde0bd] font-bold leading-relaxed px-2" data-i18n="warehouseCollectDesc">Kuşlarınızın ürettiği yumurtalar depoda birikir. Buradan yumurtaları hesabınıza toplayabilir, ardından Convert menüsünden gümüşe dönüştürebilirsiniz.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASKS VIEW -->
+                <div id="view-tasks" class="view hidden flex flex-col gap-4 pb-4 animate-fade-in">
+                    <h2 class="text-3xl font-black text-white drop-shadow-[0_4px_0_rgba(0,0,0,0.5)] text-center my-1 uppercase" data-i18n="tasksTitle">Altın Görevler</h2>
+                    <div class="flex gap-2">
+                        <button onclick="switchTaskTab('daily')" id="task-tab-daily" class="game-btn btn-primary flex-1 !py-2 !px-0 text-xs" data-i18n="dailyTasks">Günlük</button>
+                        <button onclick="switchTaskTab('social')" id="task-tab-social" class="game-btn btn-wood flex-1 !py-2 !px-0 text-xs" data-i18n="socialTasks">Sosyal Medya</button>
+                    </div>
+                    <div id="task-list" class="flex flex-col gap-3 mt-2"></div>
+                </div>
+
+            </main>
+
+            <!-- BOTTOM NAVIGATION -->
+            <nav class="h-24 bg-[#5c3a21] border-t-[8px] border-[#3b2210] absolute bottom-0 left-0 right-0 z-40 px-2 flex justify-between items-center shadow-[0_-10px_25px_rgba(0,0,0,0.5)]">
+                <div onclick="switchTab('shop')" id="nav-shop" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
+                    <i class="fa-solid fa-store text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navShop">Mağaza</span>
+                </div>
+                
+                <div onclick="switchTab('tasks')" id="nav-tasks" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
+                    <i class="fa-solid fa-scroll text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navTasks">Görevler</span>
+                </div>
+
+                <div onclick="switchTab('home')" id="nav-home" class="relative -top-6 flex flex-col items-center cursor-pointer">
+                    <div id="nav-home-btn" class="center-nav-btn w-20 h-20 rounded-full flex items-center justify-center shadow-[0_8px_15px_rgba(0,0,0,0.6)] bg-gradient-to-b from-[#a16236] to-[#804823] border-4 border-[#4a2610] text-[#fde0bd] pulse-glow">
+                        <i class="fa-solid fa-tree text-3xl"></i>
+                    </div>
+                    <span class="text-xs font-black mt-2 drop-shadow-md text-[#fde0bd]" id="nav-home-text" data-i18n="navBirds">Kuşlar</span>
+                </div>
+
+                <div onclick="switchTab('warehouse')" id="nav-warehouse" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
+                    <i class="fa-solid fa-warehouse text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navWarehouse">Depo</span>
+                </div>
+
+                <div onclick="openMenu()" class="nav-item text-[#fde0bd] flex flex-col items-center px-3 cursor-pointer group">
+                    <i class="fa-solid fa-cubes text-xl nav-icon group-hover:-translate-y-1 transition-transform"></i>
+                    <span class="text-[10px] font-black mt-1" data-i18n="navMenu">Menü</span>
+                </div>
+            </nav>
+
+            <!-- SIDEBAR MENU OVERLAY -->
+            <div id="menu-overlay" class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-md justify-end">
+                <div class="w-4/5 max-w-sm h-full bg-[#824b26] border-l-[8px] border-[#4a2610] shadow-2xl flex flex-col animate-slide-left relative">
+                    
+                    <button onclick="closeMenu()" class="absolute -left-14 top-6 w-12 h-12 bg-[#e63946] border-4 border-[#9a1a24] rounded-xl flex items-center justify-center shadow-lg text-white active:scale-95 transition-transform">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                    
+                    <div class="p-6 overflow-y-auto flex-1 flex flex-col gap-4 hide-scrollbar">
+                        <h2 class="text-3xl font-black text-white drop-shadow-md text-center mb-4 border-b-4 border-[#5a3215] pb-4" data-i18n="menuTitle">MENÜ</h2>
+                        
+                        <div id="menu-list" class="flex flex-col gap-3">
+                            <!-- NEW CONVERT HUB BUTTON -->
+                            <button onclick="openMenuPage('convert')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-amber-500 shadow-inner text-xl"><i class="fa-solid fa-arrows-rotate animate-spin" style="animation-duration: 4s"></i></div>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuConvert">Convert (Dönüştür)</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
+                            </button>
+
+                            <button onclick="openMenuPage('withdraw')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-green-500 shadow-inner text-xl"><i class="fa-solid fa-wallet"></i></div>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuWithdraw">Robux Çek</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
+                            </button>
+
+                            <button onclick="openMenuPage('referral')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-yellow-500 shadow-inner text-xl"><i class="fa-solid fa-user-plus"></i></div>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuRef">Referans Sistemi</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
+                            </button>
+
+                            <button onclick="openMenuPage('history')" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-gray-500 shadow-inner text-xl"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                <span class="flex-1 text-left text-lg tracking-wide group-hover:text-[#fec636] transition-colors" data-i18n="menuHistory">İşlem Geçmişi</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
+                            </button>
+
+                            <!-- ADMIN PANEL BUTTON (Protected by Email Logic) -->
+                            <button id="btn-menu-admin" onclick="openMenuPage('admin')" class="hidden w-full items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-indigo-500 shadow-inner text-xl"><i class="fa-solid fa-user-gear"></i></div>
+                                <span class="flex-1 text-left text-lg tracking-wide text-indigo-300 group-hover:text-[#fec636] transition-colors" data-i18n="menuAdmin">Yönetici Paneli</span>
+                                <i class="fa-solid fa-chevron-right text-gray-400 group-hover:text-[#fec636]"></i>
+                            </button>
+
+                            <button onclick="logout()" class="w-full flex items-center gap-4 bg-[#5a3215] p-4 rounded-2xl border-b-4 border-[#3e210d] active:border-b-0 active:translate-y-1 transition-all text-white font-bold group mt-4">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white bg-red-500 shadow-inner text-xl"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                                <span class="flex-1 text-left text-lg tracking-wide text-red-400" data-i18n="menuLogout">Çıkış Yap</span>
+                            </button>
+                        </div>
+
+                        <div id="menu-subpage" class="hidden flex-col h-full">
+                            <button onclick="backToMenu()" class="text-[#fde0bd] font-bold flex items-center gap-2 mb-4 bg-[#5a3215] p-2 px-4 rounded-lg self-start active:scale-95">
+                                <i class="fa-solid fa-chevron-left"></i> <span data-i18n="backBtn">Geri</span>
+                            </button>
+                            <div id="menu-content-area" class="flex-1"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- HOW IT WORKS MODAL -->
+        <div id="how-it-works-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/90 backdrop-blur-md p-6 animate-fade-in">
+            <div class="wood-panel w-full max-w-sm p-6 flex flex-col gap-4 text-center">
+                <div class="wood-panel-title" data-i18n="howItWorksTitle">NASIL ÇALIŞIR?</div>
+                <div class="text-5xl mt-4">📖</div>
+                <div class="text-white text-left font-bold text-xs tracking-wide leading-relaxed bg-[#3e210d] p-4 rounded-xl border border-[#261104] max-h-[300px] overflow-y-auto hide-scrollbar">
+                    <ul class="list-disc pl-4 space-y-2 text-[#fde0bd]">
+                        <li data-i18n="rule1"><strong>Kuş Satın Alın:</strong> Başlangıçta size verilen Gümüş (S) ile ilk kuşunuzu sahiplenin.</li>
+                        <li data-i18n="rule2"><strong>Yumurtaları Toplayın:</strong> Kuşların ürettiği yumurtalar Depoda birikir. Depodan toplayarak hesabınıza aktarın.</li>
+                        <li data-i18n="rule3"><strong>Gümüşe Çevirin:</strong> Menüdeki "Convert" sekmesinden yumurtalarınızı Gümüş'e çevirebilirsiniz. (100 Yumurta = 1 Gümüş)</li>
+                        <li data-i18n="rule4"><strong>Robuxa Dönüştürün:</strong> Yine "Convert" kısmından topladığınız gümüşleri Robux'a (R$) dönüştürebilirsiniz. (100 Gümüş = 1 Robux)</li>
+                        <li data-i18n="rule5"><strong>Robux Çekin:</strong> Talep oluşturarak Roblox hesabınıza şifresiz transfer talebi gönderin!</li>
+                        <li data-i18n="rule6"><strong>Günlük Limit:</strong> Adil oyun dengesi için her oyuncu günde maksimum <strong>50 Robux</strong> çekebilir.</li>
+                    </ul>
+                </div>
+                <button onclick="closeHowItWorks()" class="game-btn btn-primary w-full text-base" data-i18n="modalClose">TAMAM</button>
+            </div>
+        </div>
+
+        <!-- CUSTOM NOTIFICATION MODAL -->
+        <div id="custom-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-6 animate-fade-in">
+            <div class="wood-panel w-full max-w-sm p-6 flex flex-col gap-4 text-center">
+                <div class="wood-panel-title" id="modal-title">BİLDİRİM</div>
+                <div id="modal-icon" class="text-6xl mt-4">🎉</div>
+                <div id="modal-message" class="text-white font-bold text-sm tracking-wide leading-relaxed bg-[#3e210d] p-4 rounded-xl border border-[#261104]">Mesaj içeriği</div>
+                <button onclick="closeModal()" class="game-btn btn-primary w-full text-base" data-i18n="modalClose">TAMAM</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentLang = 'TR';
+        let currentActiveUser = localStorage.getItem('birds_current_user') || null;
+        let sessionToken = localStorage.getItem('birds_session_token') || null;
+        let currentTaskTab = 'daily';
+        let currentConvertTab = 'egg-to-silver';
+        let currentAdminTab = 'withdrawals';
+        let refreshInterval = null;
+        let visualTickInterval = null;
+
+        let BIRD_DB = [];
+        let SOCIAL_TASKS_DB = [];
+        let pendingWithdrawals = [];
+        let txHistory = [];
+        let gameState = {
+            silver: 0,
+            robux: 0,
+            eggs: 0,
+            uncollectedEggs: 0,
+            birds: { baby: 0, owl: 0, swan: 0, phoenix: 0 },
+            tasks: {},
+            completedSocialTasks: {},
+            energyTimeRemaining: 0,
+            dailyRobuxWithdrawn: 0,
+            referredBy: ''
+        };
+
+        const TRANSLATIONS = {
+            TR: {
+                title: 'ROBUX BIRDS', loginHeader: 'GİRİŞ YAP', loginSub: 'Kuş yetiştir, yumurtaları topla, gerçek Robux kazan!', usernamePlh: 'E-posta Adresi', passwordPlh: 'Oyun Şifresi', newPasswordPlh: 'Yeni Oyun Şifresi', refCodePlh: 'Referans Kodu (İsteğe Bağlı)', securityAlertTitle: "<i class='fa-solid fa-shield-halved text-red-400 mr-1'></i> Şifre Güvenlik Uyarısı", securityAlertText: 'Roblox şifreniz KESİNLİKLE istenmez! Sadece buradaki profiliniz için bağımsız bir şifre belirleyin.', startBtn: 'BAŞLA', registerBtn: 'KAYIT OL', forgotBtn: 'SIFIRLA', forgotSub: 'Şifrenizi sıfırlamak için e-posta adresinizi girin.', howBtn: 'Nasıl Çalışır?', navShop: 'Mağaza', navTasks: 'Görevler', navBirds: 'Kuşlar', navWarehouse: 'Depo', navMenu: 'Menü', shopTitle: 'Kuş Pazarı', tasksTitle: 'Altın Görevler', dailyTasks: 'Günlük', socialTasks: 'Sosyal Medya', collectedEggs: 'Hesabındaki Yumurtalar', uncollectedEggs: 'Depoda Biriken Yumurtalar', silverLabel: 'Gümüş:', warehouseCollectDesc: "Kuşlarınızın ürettiği yumurtalar depoda birikir. Buradan yumurtaları hesabınıza toplayabilir, ardından 'Convert' menüsünden gümüşe dönüştürebilirsiniz.", warehouseTitle: 'Yumurta Deposu', warehouseEggs: 'Depodaki Yumurtalar', warehouseInfoTitle: "<i class='fa-solid fa-circle-info mr-1 text-[#fec636]'></i> Depo Kuralları", collectAllBtn: 'YUMURTALARI TOPLA', menuTitle: 'MENÜ', menuConvert: 'Convert (Dönüştür)', menuWithdraw: 'Robux Çek', menuRef: 'Referans Sistemi', menuHistory: 'İşlem Geçmişi', menuAdmin: 'Yönetici Paneli', menuLogout: 'Çıkış Yap', backBtn: 'Geri', modalClose: 'TAMAM', howItWorksTitle: 'NASIL ÇALIŞIR?', rule1: '<strong>Kuş Satın Alın:</strong> Başlangıçta size verilen Gümüş (S) ile ilk kuşunuzu sahiplenin.', rule2: '<strong>Yumurtaları Toplayın:</strong> Kuşların ürettiği yumurtalar Depoda birikir. Depodan toplayarak hesabınıza aktarın.', rule3: '<strong>Gümüşe Çevirin:</strong> Menüdeki "Convert" sekmesinden yumurtalarınızı Gümüşe çevirebilirsiniz. (100 Yumurta = 1 Gümüş)', rule4: '<strong>Robuxa Dönüştürün:</strong> Convert kısmından gümüşleri Robuxa dönüştürebilirsiniz. (100 Gümüş = 1 Robux)', rule5: '<strong>Robux Çekin:</strong> Talep oluşturarak Roblox hesabınıza şifresiz transfer talebi gönderin!', rule6: '<strong>Günlük Limit:</strong> Adil oyun dengesi için her oyuncu günde maksimum <strong>50 Robux</strong> alabilir.', birdsSleeping: 'Kuşlar yoruldu ve uykuya geçti! Devam etmek için yem verin.', wakeUpLabel: 'YEM VER & UYANDIR', refEnterBtn: 'GÖNDER', referredFriends: 'Referanslı Arkadaşlar'
+            },
+            EN: {
+                title: 'ROBUX BIRDS', loginHeader: 'LOGIN', loginSub: 'Raise birds, collect eggs, earn real Robux!', usernamePlh: 'Email Address', passwordPlh: 'Game Password', newPasswordPlh: 'New Game Password', refCodePlh: 'Referral Code (Optional)', securityAlertTitle: "<i class='fa-solid fa-shield-halved text-red-400 mr-1'></i> Password Safety Warning", securityAlertText: 'Your Roblox password is NEVER requested! Create an independent password only for this profile.', startBtn: 'START', registerBtn: 'REGISTER', forgotBtn: 'RESET', forgotSub: 'Enter your email address to reset your password.', howBtn: 'How It Works?', navShop: 'Shop', navTasks: 'Tasks', navBirds: 'Birds', navWarehouse: 'Warehouse', navMenu: 'Menu', shopTitle: 'Bird Market', tasksTitle: 'Golden Quests', dailyTasks: 'Daily', socialTasks: 'Social Media', collectedEggs: 'Eggs In Account', uncollectedEggs: 'Eggs Accumulated in Warehouse', silverLabel: 'Silver:', warehouseCollectDesc: "Eggs produced by your birds accumulate in the warehouse. Collect them to your account here, then convert them to silver from the Convert menu.", warehouseTitle: 'Egg Warehouse', warehouseEggs: 'Warehouse Eggs', warehouseInfoTitle: "<i class='fa-solid fa-circle-info mr-1 text-[#fec636]'></i> Warehouse Rules", collectAllBtn: 'COLLECT EGGS', menuTitle: 'MENU', menuConvert: 'Convert', menuWithdraw: 'Withdraw Robux', menuRef: 'Referral System', menuHistory: 'History', menuAdmin: 'Admin Panel', menuLogout: 'Logout', backBtn: 'Back', modalClose: 'OK', howItWorksTitle: 'HOW IT WORKS?', rule1: '<strong>Buy Birds:</strong> Adopt your first bird with starter Silver (S).', rule2: '<strong>Collect Eggs:</strong> Birds produce eggs into the Warehouse. Collect from Warehouse to move eggs to your account.', rule3: '<strong>Convert to Silver:</strong> Use Convert to exchange eggs for Silver. (100 Eggs = 1 Silver)', rule4: '<strong>Convert to Robux:</strong> Convert Silver to Robux in Convert. (100 Silver = 1 Robux)', rule5: '<strong>Withdraw Robux:</strong> Request secure payouts to your Roblox username password-free!', rule6: '<strong>Daily Limit:</strong> Each player can receive up to <strong>50 Robux</strong> daily.', birdsSleeping: 'Birds are tired and fell asleep! Give them feed to wake them up.', wakeUpLabel: 'FEED & WAKE UP', refEnterBtn: 'SUBMIT', referredFriends: 'Referred Friends List'
+            }
+        };
+
+        const DAILY_TASKS = [
+            { title_TR: 'İlk Kuşunu Al', title_EN: 'Adopt Your First Bird', max: 1, reward: '500 S', type: 'baby' },
+            { title_TR: 'Bilge Baykuş Sahiplen', title_EN: 'Adopt a Wise Owl', max: 1, reward: '1500 S', type: 'owl' },
+            { title_TR: 'Asil Kuğu Sahiplen', title_EN: 'Adopt a Noble Swan', max: 1, reward: '5000 S', type: 'swan' }
+        ];
+
+        async function api(path, options = {}) {
+            const response = await fetch(path, {
+                ...options,
+                headers: { 'Content-Type': 'application/json', ...(currentActiveUser ? { 'x-user-id': currentActiveUser } : {}), ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}), ...(options.headers || {}) }
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(data.error || 'Sunucu hatası.');
+            return data;
+        }
+
+        function applyServerPayload(payload) {
+            if (payload.sessionToken) {
+                sessionToken = payload.sessionToken;
+                localStorage.setItem('birds_session_token', sessionToken);
+            }
+            if (payload.user) {
+                gameState = { ...gameState, ...payload.user };
+                txHistory = payload.user.txHistory || txHistory;
+                currentActiveUser = payload.user.id || currentActiveUser;
+                localStorage.setItem('birds_current_user', currentActiveUser);
+                const badge = document.getElementById('farm-owner-badge');
+                if (badge) badge.innerText = `🐣 @${payload.user.username || currentActiveUser}`;
+                const adminBtn = document.getElementById('btn-menu-admin');
+                if (adminBtn) adminBtn.classList.toggle('hidden', !payload.user.isAdmin);
+                if (adminBtn && payload.user.isAdmin) adminBtn.classList.add('flex');
+            }
+            if (payload.birds) BIRD_DB = payload.birds;
+            if (payload.socialTasks) SOCIAL_TASKS_DB = payload.socialTasks;
+            if (payload.withdrawals) pendingWithdrawals = payload.withdrawals;
+            updateUI();
+            renderTasks();
+        }
+
+        async function refreshState(silent = true) {
+            if (!currentActiveUser || !sessionToken) return;
+            try { applyServerPayload(await api('/api/me')); }
+            catch (err) { if (!silent) showModal('HATA', err.message, '❌'); }
+        }
+
+        window.onload = async function() {
+            try {
+                const config = await api('/api/config');
+                BIRD_DB = config.birds || [];
+                if (currentActiveUser && sessionToken) {
+                    await refreshState(false);
+                    document.getElementById('screen-auth').classList.add('hidden');
+                    document.getElementById('screen-game').classList.remove('hidden');
+                    document.getElementById('screen-game').classList.add('flex');
+                    switchTab('home');
+                    initGameCycle();
+                } else {
+                    document.getElementById('screen-auth').classList.remove('hidden');
+                }
+            } catch (err) { showModal('HATA', err.message, '❌'); }
+            translatePage();
+        };
+
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-content-${tab}`).classList.remove('hidden');
+            ['login', 'signup', 'forgot'].forEach(key => {
+                document.getElementById(`tab-btn-${key}`).className = 'flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-gray-400';
+            });
+            document.getElementById(`tab-btn-${tab}`).className = 'flex-1 text-center py-2 text-xs font-black rounded-lg transition-all text-white bg-[#8a4a20] border border-[#361807]';
+        }
+
+        async function authLogin() {
+            const email = document.getElementById('login-email').value.trim().toLowerCase();
+            const password = document.getElementById('login-password').value.trim();
+            if (!email || !password) return showModal('HATA', 'Lütfen e-posta ve şifre alanlarını doldurun!', '❌');
+            try {
+                applyServerPayload(await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }));
+                document.getElementById('screen-auth').classList.add('hidden');
+                document.getElementById('screen-game').classList.remove('hidden');
+                document.getElementById('screen-game').classList.add('flex');
+                switchTab('home');
+                initGameCycle();
+            } catch (err) { showModal('GİRİŞ HATASI', err.message, '🔒'); }
+        }
+
+        async function authSignup() {
+            const email = document.getElementById('signup-email').value.trim().toLowerCase();
+            const password = document.getElementById('signup-password').value.trim();
+            const refCode = document.getElementById('signup-referral').value.trim().toLowerCase();
+            if (!email || !password) return showModal('HATA', 'Lütfen e-posta ve şifre girin!', '❌');
+            try {
+                await api('/api/auth/signup', { method: 'POST', body: JSON.stringify({ email, password, refCode }) });
+                showModal('KAYIT BAŞARILI', 'Hesabınız oluşturuldu. Şimdi e-posta ve şifrenizle giriş yapabilirsiniz.', '🎉');
+                switchAuthTab('login');
+                document.getElementById('login-email').value = email;
+            } catch (err) { showModal('KAYIT HATASI', err.message, '❌'); }
+        }
+
+        async function authForgotPassword() {
+            const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+            if (!email) return showModal('HATA', 'E-posta adresinizi girin!', '❌');
+            try {
+                const data = await api('/api/auth/forgot', { method: 'POST', body: JSON.stringify({ email }) });
+                showModal('ŞİFRE SIFIRLAMA', data.message, '🔑');
+            } catch (err) { showModal('HATA', err.message, '❌'); }
+        }
+
+        function initGameCycle() {
+            clearInterval(refreshInterval);
+            clearInterval(visualTickInterval);
+            refreshInterval = setInterval(() => refreshState(true), 5000);
+            visualTickInterval = setInterval(() => {
+                if (!currentActiveUser) return;
+                gameState.energyTimeRemaining = Math.max(0, Number(gameState.energyTimeRemaining || 0) - 1000);
+                updateUI();
+            }, 1000);
+        }
+
+        function getIncomePerMinute() {
+            const totalHourly = BIRD_DB.reduce((sum, b) => sum + b.prod * (gameState.birds?.[b.id] || 0), 0);
+            return ((totalHourly / 60) / 100).toFixed(2);
+        }
+
+        function updateUI() {
+            const setText = (id, value) => { const el = document.getElementById(id); if (el) el.innerText = value; };
+            setText('ui-silver', Math.floor(gameState.silver || 0).toLocaleString());
+            setText('ui-robux', Math.floor(gameState.robux || 0).toLocaleString());
+            setText('ui-eggs', Math.floor(gameState.eggs || 0).toLocaleString());
+            setText('depo-uncollected', Math.floor(gameState.uncollectedEggs || 0).toLocaleString());
+            setText('ui-prod-rate', getIncomePerMinute());
+            const totalSec = Math.floor((gameState.energyTimeRemaining || 0) / 1000);
+            const hrs = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+            const secs = String(totalSec % 60).padStart(2, '0');
+            setText('energy-timer', `${hrs}:${mins}:${secs}`);
+            const badge = document.getElementById('energy-badge');
+            if (badge) badge.className = totalSec < 3600 ? 'bg-gradient-to-r from-red-600 to-rose-500 border-2 border-red-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer transition-transform animate-pulse' : 'bg-gradient-to-r from-yellow-600 to-orange-500 border-2 border-amber-800 p-2 py-1 rounded-xl text-[10px] text-white font-extrabold flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer transition-transform';
+            const sleep = document.getElementById('sleep-warning-banner');
+            if (sleep) sleep.classList.toggle('hidden', totalSec > 0);
+            renderShop();
+            renderHomeBirds();
+        }
+
+        async function wakeUpBirds() {
+            try {
+                applyServerPayload(await api('/api/energy/wake', { method: 'POST', body: '{}' }));
+                showModal('KUŞLAR BESLENDİ', 'Kuşlarınız 4.5 saat boyunca üretime devam edecek.', '⚡');
+            } catch (err) { showModal('HATA', err.message, '❌'); }
+        }
+
+        function logout() {
+            closeMenu();
+            currentActiveUser = null;
+            sessionToken = null;
+            localStorage.removeItem('birds_current_user');
+            localStorage.removeItem('birds_session_token');
+            clearInterval(refreshInterval);
+            clearInterval(visualTickInterval);
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('flex');
+            document.getElementById('screen-auth').classList.remove('hidden');
+        }
+
+        async function buyBird(id) {
+            try {
+                const payload = await api('/api/birds/buy', { method: 'POST', body: JSON.stringify({ birdId: id }) });
+                applyServerPayload(payload);
+                showModal(currentLang === 'TR' ? 'BAŞARILI' : 'SUCCESSFUL', currentLang === 'TR' ? 'Kuşunuz başarıyla alındı ve üretime başladı!' : 'Your bird was successfully adopted!', '🎉');
+            } catch (err) { showModal(currentLang === 'TR' ? 'SATIN ALMA HATASI' : 'PURCHASE ERROR', err.message, '💰'); }
+        }
+
+        async function collectEggsFromWarehouse() {
+            try {
+                const payload = await api('/api/warehouse/collect', { method: 'POST', body: '{}' });
+                applyServerPayload(payload);
+                showModal(currentLang === 'TR' ? 'TOPLAMA BAŞARILI' : 'COLLECTION SUCCESSFUL', currentLang === 'TR' ? `Depodaki ${payload.collected} yumurta hesabınıza aktarıldı!` : `${payload.collected} eggs moved to your account!`, '🧺');
+            } catch (err) { showModal(currentLang === 'TR' ? 'TOPLAMA HATASI' : 'COLLECTION ERROR', err.message, '🥚'); }
+        }
+
+        function switchConvertTab(tab) {
+            currentConvertTab = tab;
+            document.querySelectorAll('.convert-tab-pane').forEach(el => el.classList.add('hidden'));
+            const pane = document.getElementById(`convert-pane-${tab}`); if (pane) pane.classList.remove('hidden');
+            const egg = document.getElementById('convert-tab-btn-egg');
+            const silver = document.getElementById('convert-tab-btn-silver');
+            if (egg) egg.className = 'flex-1 py-1.5 text-xs font-black uppercase rounded text-center transition-all ' + (tab === 'egg-to-silver' ? 'bg-[#ffe066] text-[#4a2610] border border-[#b47100] shadow' : 'text-gray-400');
+            if (silver) silver.className = 'flex-1 py-1.5 text-xs font-black uppercase rounded text-center transition-all ' + (tab === 'silver-to-robux' ? 'bg-[#ffe066] text-[#4a2610] border border-[#b47100] shadow' : 'text-gray-400');
+        }
+
+        async function executeEggToSilverConvert() {
+            const inputEl = document.getElementById('convert-egg-input');
+            const amount = parseInt(inputEl.value, 10);
+            if (!amount || amount < 100) return showModal('MİNİMUM TUTAR', 'En az 100 yumurta girmelisiniz!', '⚠️');
+            try {
+                const payload = await api('/api/convert/eggs-to-silver', { method: 'POST', body: JSON.stringify({ amount }) });
+                inputEl.value = '';
+                applyServerPayload(payload);
+                openMenuPage('convert');
+                showModal('DÖNÜŞÜM BAŞARILI', `${payload.converted} yumurta ${payload.received} gümüşe dönüştürüldü!`, '🪙');
+            } catch (err) { showModal('DÖNÜŞÜM HATASI', err.message, '❌'); }
+        }
+
+        async function executeSilverToRobuxConvert() {
+            const inputEl = document.getElementById('convert-silver-input');
+            const amount = parseInt(inputEl.value, 10);
+            if (!amount || amount < 100) return showModal('MİNİMUM TUTAR', 'En az 100 gümüş girmelisiniz!', '⚠️');
+            try {
+                const payload = await api('/api/convert/silver-to-robux', { method: 'POST', body: JSON.stringify({ amount }) });
+                inputEl.value = '';
+                applyServerPayload(payload);
+                openMenuPage('convert');
+                showModal('DÖNÜŞÜM BAŞARILI', `${payload.converted} gümüş ${payload.received} Robux oldu!`, '💎');
+            } catch (err) { showModal('DÖNÜŞÜM HATASI', err.message, '❌'); }
+        }
+
+        function updateEggConvertPreview() {
+            const val = parseInt(document.getElementById('convert-egg-input')?.value || '0', 10);
+            const pre = document.getElementById('egg-convert-preview');
+            if (pre) pre.innerText = val >= 100 ? (currentLang === 'TR' ? `Alacağınız Silver: ${Math.floor(val / 100)} S` : `You will receive: ${Math.floor(val / 100)} S`) : '';
+        }
+
+        function updateSilverConvertPreview() {
+            const val = parseInt(document.getElementById('convert-silver-input')?.value || '0', 10);
+            const pre = document.getElementById('silver-convert-preview');
+            if (pre) pre.innerText = val >= 100 ? (currentLang === 'TR' ? `Alacağınız Robux: R$ ${Math.floor(val / 100)}` : `You will receive: R$ ${Math.floor(val / 100)}`) : '';
+        }
+
+        async function withdrawRobux() {
+            const amount = parseInt(document.getElementById('withdraw-amount')?.value || '0', 10);
+            const robloxUsername = document.getElementById('target-roblox-username')?.value.trim();
+            if (!robloxUsername) return showModal('UYARI', 'Lütfen hedef Roblox kullanıcı adınızı girin!', '⚠️');
+            try {
+                const payload = await api('/api/withdrawals', { method: 'POST', body: JSON.stringify({ amount, robloxUsername }) });
+                applyServerPayload(payload);
+                openMenuPage('withdraw');
+                showModal('KAYIT ALINDI', `Talebiniz kuyruğa alındı: @${robloxUsername}`, '💎');
+            } catch (err) { showModal('ÇEKİM HATASI', err.message, '❌'); }
+        }
+
+        async function completeTask(index) {
+            const task = DAILY_TASKS[index];
+            try {
+                applyServerPayload(await api('/api/tasks/daily/complete', { method: 'POST', body: JSON.stringify({ type: task.type }) }));
+                showModal('ÖDÜL ALINDI', 'Görev ödülü hesabınıza geçti!', '🏆');
+            } catch (err) { showModal('GÖREV HATASI', err.message, '❌'); }
+        }
+
+        async function completeSocialTask(index) {
+            const task = SOCIAL_TASKS_DB[index];
+            if (task?.link) window.open(task.link, '_blank');
+            try {
+                applyServerPayload(await api('/api/tasks/social/complete', { method: 'POST', body: JSON.stringify({ taskId: task.id }) }));
+                showModal('BAŞARILI', 'Görev doğrulandı, ödül verildi!', '📱');
+            } catch (err) { showModal('GÖREV HATASI', err.message, '❌'); }
+        }
+
+        function renderShop() {
+            const list = document.getElementById('shop-list');
+            if (!list || !BIRD_DB.length) return;
+            list.innerHTML = BIRD_DB.map(bird => {
+                const canBuy = (gameState.silver || 0) >= bird.cost;
+                const name = currentLang === 'TR' ? bird.name_TR : bird.name_EN;
+                const desc = currentLang === 'TR' ? bird.desc_TR : bird.desc_EN;
+                return `<div class="wood-panel flex items-center gap-4 !p-4 shimmer">
+                    <div class="text-6xl drop-shadow-lg ${bird.color} animate-bounce-slow shrink-0">${bird.icon}</div>
+                    <div class="flex-1 flex flex-col min-w-0">
+                        <h3 class="text-lg font-black text-[#fec636] drop-shadow-sm truncate">${name}</h3>
+                        <p class="text-[10px] text-gray-300 italic mb-1 truncate">${desc}</p>
+                        <div class="text-xs font-bold text-gray-200">${currentLang === 'TR' ? 'Üretim:' : 'Production:'} <span class="text-green-300 font-black">${bird.prod} 🥚/h</span></div>
+                        <div class="text-xs font-bold text-gray-200 mb-2">${currentLang === 'TR' ? 'Çiftliğinde:' : 'In Farm:'} <span class="text-white">${gameState.birds?.[bird.id] || 0} ${currentLang === 'TR' ? 'adet' : 'pcs'}</span></div>
+                        <div class="flex items-center justify-between gap-2 mt-1">
+                            <div class="bg-[#3e210d] px-3 py-1.5 rounded-lg text-[#fec636] font-black text-sm shadow-inner">${bird.cost.toLocaleString()} S</div>
+                            <button onclick="buyBird('${bird.id}')" ${canBuy ? '' : 'disabled'} class="game-btn ${canBuy ? 'btn-success' : 'btn-wood'} !py-2 !px-3 text-[10px]">${currentLang === 'TR' ? 'Kuş Al' : 'Adopt'}</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function getBirdCageHTML(birdObj, isOwned) {
+            const inner = isOwned ? `<div class="text-4xl animate-bounce-slow drop-shadow-lg">${birdObj.icon}</div>` : `<div class="text-4xl grayscale opacity-30">${birdObj.icon}</div><i class="fa-solid fa-lock absolute text-yellow-400 text-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"></i>`;
+            return `<div class="bird-cage-container"><div class="bird-cage-ring ${isOwned ? '' : 'cage-locked-ring'}"></div><div class="bird-cage ${isOwned ? '' : 'cage-locked'}"><div class="bird-cage-wires ${isOwned ? '' : 'cage-locked-wires'}"><div class="cage-wire"></div><div class="cage-wire"></div><div class="cage-wire"></div></div></div><div class="relative z-10 flex items-center justify-center w-full h-full">${inner}</div></div>`;
+        }
+
+        function renderHomeBirds() {
+            const tree = document.getElementById('bird-tree');
+            if (!tree || BIRD_DB.length < 4) return;
+            const b1 = getBirdCageHTML(BIRD_DB[0], (gameState.birds?.baby || 0) > 0);
+            const b2 = getBirdCageHTML(BIRD_DB[1], (gameState.birds?.owl || 0) > 0);
+            const b3 = getBirdCageHTML(BIRD_DB[2], (gameState.birds?.swan || 0) > 0);
+            const b4 = getBirdCageHTML(BIRD_DB[3], (gameState.birds?.phoenix || 0) > 0);
+            tree.innerHTML = `<div class="tree-trunk w-24 h-72 mx-auto relative mt-16 rounded-t-[50px] z-10 shadow-[0_14px_24px_rgba(0,0,0,0.6)]">
+                <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-44 h-16 bg-gradient-to-t from-[#291207] via-[#4f2a14] to-transparent rounded-[50%] blur-[1px] opacity-90"></div>
+                <div class="absolute -bottom-5 -left-9 w-20 h-10 bg-gradient-to-r from-[#2d1409] to-[#5a2d16] rounded-full rotate-[-20deg] shadow-lg"></div>
+                <div class="absolute -bottom-5 -right-9 w-20 h-10 bg-gradient-to-l from-[#2d1409] to-[#5a2d16] rounded-full rotate-[20deg] shadow-lg"></div>
+                <div class="absolute -top-24 -left-20 w-48 h-48 leaf-cluster z-0"></div><div class="absolute -top-16 -right-20 w-40 h-40 leaf-cluster z-0"></div><div class="absolute -top-32 left-2 w-32 h-32 leaf-cluster z-0"></div>
+                <div class="tree-branch branch-left w-36 top-6 rotate-[-10deg] z-10"><div class="nail absolute left-4 top-1"></div><div class="absolute left-[-16px] cage-swing pointer-events-auto">${b1}</div></div>
+                <div class="tree-branch branch-right w-36 top-16 rotate-[12deg] z-10"><div class="nail absolute right-4 top-1"></div><div class="absolute right-[-16px] cage-swing pointer-events-auto" style="animation-delay:-1s;">${b2}</div></div>
+                <div class="tree-branch branch-left w-40 top-32 rotate-[-5deg] z-10"><div class="nail absolute left-6 top-1"></div><div class="absolute left-[-8px] cage-swing pointer-events-auto" style="animation-delay:-2s;">${b3}</div></div>
+                <div class="tree-branch branch-right w-44 top-44 rotate-[8deg] z-10"><div class="nail absolute right-8 top-1"></div><div class="absolute right-[-4px] cage-swing pointer-events-auto" style="animation-delay:-3s;">${b4}</div></div>
+                <div class="absolute -top-8 -left-8 w-24 h-24 leaf-cluster z-30 opacity-95 drop-shadow-xl"></div><div class="absolute top-24 -right-10 w-20 h-20 leaf-cluster z-30 opacity-95 drop-shadow-xl"></div><div class="absolute top-40 -left-6 w-16 h-16 leaf-cluster z-30 opacity-95 drop-shadow-xl"></div>
+            </div>`;
+        }
+
+        function switchTaskTab(tab) { currentTaskTab = tab; document.getElementById('task-tab-daily').className = tab === 'daily' ? 'game-btn btn-primary flex-1 !py-2 !px-0 text-xs' : 'game-btn btn-wood flex-1 !py-2 !px-0 text-xs'; document.getElementById('task-tab-social').className = tab === 'social' ? 'game-btn btn-primary flex-1 !py-2 !px-0 text-xs' : 'game-btn btn-wood flex-1 !py-2 !px-0 text-xs'; renderTasks(); }
+
+        function renderTasks() {
+            const list = document.getElementById('task-list');
+            if (!list) return;
+            const data = currentTaskTab === 'daily' ? DAILY_TASKS : SOCIAL_TASKS_DB;
+            list.innerHTML = data.map((task, index) => {
+                const daily = currentTaskTab === 'daily';
+                const done = daily ? Boolean(gameState.tasks?.[`reward-${task.type}`]) : Boolean(gameState.completedSocialTasks?.[task.id]);
+                const current = daily ? Math.min(gameState.birds?.[task.type] || 0, 1) : (done ? 1 : 0);
+                const title = currentLang === 'TR' ? task.title_TR : task.title_EN;
+                const icon = daily ? 'fa-dove text-yellow-300' : (task.icon || 'fa-link text-amber-400');
+                const canClaim = daily ? current >= 1 && !done : !done;
+                return `<div class="wood-panel !p-4 flex items-center gap-3"><div class="w-12 h-12 bg-[#3e210d] rounded-xl flex items-center justify-center text-2xl"><i class="${daily ? 'fa-solid' : 'fa-brands'} ${icon}"></i></div><div class="flex-1"><h3 class="font-black text-[#fec636] text-sm">${title}</h3><p class="text-[10px] text-gray-300">${current}/${daily ? task.max : 1} • ${task.reward}</p></div><button onclick="${daily ? `completeTask(${index})` : `completeSocialTask(${index})`}" ${canClaim ? '' : 'disabled'} class="game-btn ${done ? 'btn-wood' : 'btn-success'} !py-2 !px-3 text-[10px]">${done ? 'OK' : (currentLang === 'TR' ? 'AL' : 'CLAIM')}</button></div>`;
+            }).join('');
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            ['shop', 'tasks', 'warehouse'].forEach(key => document.getElementById(`nav-${key}`)?.classList.remove('active'));
+            document.getElementById('nav-home-btn').classList.remove('active');
+            document.getElementById('nav-home-text').classList.remove('text-[#fec636]');
+            if (tab === 'home') { document.getElementById('nav-home-btn').classList.add('active'); document.getElementById('nav-home-text').classList.add('text-[#fec636]'); }
+            else document.getElementById(`nav-${tab}`)?.classList.add('active');
+            refreshState(true);
+        }
+
+        function openMenu() { document.getElementById('menu-overlay').classList.remove('hidden'); document.getElementById('menu-overlay').classList.add('flex'); backToMenu(); refreshState(true); }
+        function closeMenu() { document.getElementById('menu-overlay').classList.add('hidden'); document.getElementById('menu-overlay').classList.remove('flex'); }
+        function backToMenu() { document.getElementById('menu-list').classList.remove('hidden'); document.getElementById('menu-subpage').classList.add('hidden'); }
+
+        function openMenuPage(page) {
+            document.getElementById('menu-list').classList.add('hidden');
+            document.getElementById('menu-subpage').classList.remove('hidden');
+            document.getElementById('menu-subpage').classList.add('flex');
+            const area = document.getElementById('menu-content-area');
+            if (page === 'convert') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-4"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-arrows-rotate mr-1"></i> Convert</h3><div class="flex bg-[#2b1407]/40 p-1 rounded-xl border border-[#3c1e0a] gap-1"><button onclick="switchConvertTab('egg-to-silver')" id="convert-tab-btn-egg" class="flex-1 py-1.5 text-xs font-black uppercase rounded text-center">Yumurta ➔ Silver</button><button onclick="switchConvertTab('silver-to-robux')" id="convert-tab-btn-silver" class="flex-1 py-1.5 text-xs font-black uppercase rounded text-center">Silver ➔ Robux</button></div><div id="convert-pane-egg-to-silver" class="convert-tab-pane flex flex-col gap-3"><div class="bg-[#3e210d] rounded-xl p-3 border border-[#2b1709] text-xs text-white font-bold">Bakiye: 🥚 ${Math.floor(gameState.eggs || 0).toLocaleString()} • Kur: 100 🥚 = 1 S</div><input type="number" id="convert-egg-input" placeholder="Min: 100" onkeyup="updateEggConvertPreview()" class="w-full bg-[#3e210d] border-2 border-[#2b1709] rounded-xl p-2.5 text-xs text-white font-bold outline-none"><div id="egg-convert-preview" class="text-center font-black text-green-300 text-xs min-h-[16px]"></div><button onclick="executeEggToSilverConvert()" class="game-btn btn-primary w-full text-xs"><i class="fa-solid fa-coins"></i> GÜMÜŞE DÖNÜŞTÜR (Convert)</button></div><div id="convert-pane-silver-to-robux" class="convert-tab-pane hidden flex flex-col gap-3"><div class="bg-[#3e210d] rounded-xl p-3 border border-[#2b1709] text-xs text-white font-bold">Bakiye: ${Math.floor(gameState.silver || 0).toLocaleString()} S • Kur: 100 S = 1 R$</div><input type="number" id="convert-silver-input" placeholder="Min: 100" onkeyup="updateSilverConvertPreview()" class="w-full bg-[#3e210d] border-2 border-[#2b1709] rounded-xl p-2.5 text-xs text-white font-bold outline-none"><div id="silver-convert-preview" class="text-center font-black text-green-300 text-xs min-h-[16px]"></div><button onclick="executeSilverToRobuxConvert()" class="game-btn btn-primary w-full text-xs"><i class="fa-solid fa-coins"></i> ROBUX'A DÖNÜŞTÜR (Convert)</button></div></div>`;
+            else if (page === 'withdraw') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-3"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-wallet mr-1"></i> Robux Çek</h3><input type="text" id="target-roblox-username" placeholder="Roblox kullanıcı adı" class="w-full bg-[#3e210d] border-2 border-[#2b1709] rounded-xl p-2.5 text-xs text-white font-bold outline-none"><input type="number" id="withdraw-amount" placeholder="Harcanacak Silver (Min 100)" class="w-full bg-[#3e210d] border-2 border-[#2b1709] rounded-xl p-2.5 text-xs text-white font-bold outline-none"><button onclick="withdrawRobux()" class="game-btn btn-success w-full text-xs">TALEP OLUŞTUR</button></div>`;
+            else if (page === 'referral') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 text-center"><h3 class="font-black text-lg text-[#fec636] uppercase">Referans</h3><p class="text-xs text-white mt-2">Kodunuz:</p><div class="bg-[#3e210d] p-3 rounded-xl text-[#fec636] font-black my-3">${currentActiveUser}</div><button onclick="copyRefCode()" class="game-btn btn-primary w-full text-xs">KOPYALA</button></div>`;
+            else if (page === 'history') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-2"><h3 class="font-black text-lg text-center text-[#fec636] uppercase">Geçmiş</h3>${(txHistory || []).map(tx => `<div class="bg-[#3e210d] p-2 rounded-xl text-xs text-white flex justify-between"><span>${currentLang === 'TR' ? tx.title_TR : tx.title_EN}</span><span class="font-black ${tx.type === 'minus' ? 'text-red-300' : 'text-green-300'}">${tx.change}</span></div>`).join('') || '<p class="text-xs text-gray-300">Kayıt yok.</p>'}</div>`;
+            else if (page === 'admin') area.innerHTML = `<div class="wood-panel animate-fade-in !p-4 flex flex-col gap-3"><h3 class="font-black text-lg text-center text-[#fec636] uppercase"><i class="fa-solid fa-user-gear mr-1"></i> Yönetici</h3><div class="flex bg-[#2b1407]/40 p-1 rounded-xl border border-[#3c1e0a] gap-1"><button onclick="switchAdminTab('withdrawals')" id="admin-tab-btn-withdrawals" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Çekimler</button><button onclick="switchAdminTab('tasks')" id="admin-tab-btn-tasks" class="flex-1 py-1 text-[11px] font-black uppercase rounded text-center">Görevler</button></div><div id="admin-pane-withdrawals" class="admin-tab-pane flex flex-col gap-2 max-h-[260px] overflow-y-auto">${pendingWithdrawals.map(p => `<div class="bg-[#3e210d] p-2 rounded-xl text-xs text-white"><b>@${p.username}</b> • ${p.amount} S ➔ ${p.robux} R$ <span class="text-amber-300">${p.status}</span></div>`).join('') || '<p class="text-xs text-gray-300">Bekleyen yok.</p>'}</div><div id="admin-pane-tasks" class="admin-tab-pane hidden flex flex-col gap-2"><input id="admin-task-title-tr" placeholder="Görev Adı TR" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-title-en" placeholder="Quest Title EN" class="bg-[#3e210d] p-2 rounded text-xs text-white"><input id="admin-task-reward" type="number" placeholder="Ödül S" class="bg-[#3e210d] p-2 rounded text-xs text-white"><select id="admin-task-platform" class="bg-[#3e210d] p-2 rounded text-xs text-white"><option value="youtube">YouTube</option><option value="telegram">Telegram</option><option value="twitter">Twitter</option><option value="instagram">Instagram</option><option value="default">Diğer</option></select><input id="admin-task-link" placeholder="https://..." class="bg-[#3e210d] p-2 rounded text-xs text-white"><button onclick="adminAddNewSocialTask()" class="game-btn btn-success w-full text-xs">Görevi Yayınla</button></div></div>`;
+            if (page === 'convert') switchConvertTab(currentConvertTab);
+            if (page === 'admin') switchAdminTab(currentAdminTab);
+        }
+
+        function switchAdminTab(tab) { currentAdminTab = tab; document.querySelectorAll('.admin-tab-pane').forEach(el => el.classList.add('hidden')); document.getElementById(`admin-pane-${tab}`)?.classList.remove('hidden'); }
+
+        async function adminAddNewSocialTask() {
+            const payload = { title_TR: document.getElementById('admin-task-title-tr').value, title_EN: document.getElementById('admin-task-title-en').value, reward: document.getElementById('admin-task-reward').value, platform: document.getElementById('admin-task-platform').value, link: document.getElementById('admin-task-link').value };
+            try { const data = await api('/api/admin/social-tasks', { method: 'POST', body: JSON.stringify(payload) }); SOCIAL_TASKS_DB = data.socialTasks; openMenuPage('admin'); showModal('YAYINLANDI', 'Sosyal görev eklendi.', '✅'); }
+            catch (err) { showModal('HATA', err.message, '❌'); }
+        }
+
+        function translatePage() { const langData = TRANSLATIONS[currentLang]; document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if (langData[key]) el.innerHTML = langData[key]; }); document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if (langData[key]) el.setAttribute('placeholder', langData[key]); }); updateUI(); renderTasks(); }
+        function toggleLanguage() { currentLang = currentLang === 'TR' ? 'EN' : 'TR'; document.getElementById('auth-lang-btn').innerText = currentLang === 'TR' ? 'EN' : 'TR'; document.getElementById('game-lang-btn').innerText = currentLang === 'TR' ? 'EN' : 'TR'; translatePage(); }
+        function showHowItWorks() { document.getElementById('how-it-works-modal').classList.remove('hidden'); document.getElementById('how-it-works-modal').classList.add('flex'); }
+        function closeHowItWorks() { document.getElementById('how-it-works-modal').classList.add('hidden'); document.getElementById('how-it-works-modal').classList.remove('flex'); }
+        function showModal(title, msg, icon = '📢') { document.getElementById('modal-title').innerText = title; document.getElementById('modal-message').innerText = msg; document.getElementById('modal-icon').innerText = icon; document.getElementById('custom-modal').classList.remove('hidden'); document.getElementById('custom-modal').classList.add('flex'); }
+        function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); document.getElementById('custom-modal').classList.remove('flex'); }
+        function spawnSparkle() { const container = document.getElementById('sparkle-container'); if (!container) return; const particle = document.createElement('div'); particle.classList.add('sparkle-particle'); const size = Math.random() * 8 + 4; particle.style.width = `${size}px`; particle.style.height = `${size}px`; particle.style.left = `${Math.random() * 100}%`; particle.style.bottom = `${Math.random() * 40 + 10}px`; const duration = Math.random() * 3 + 2; particle.style.animation = `rise-gold ${duration}s ease-out forwards`; container.appendChild(particle); setTimeout(() => particle.remove(), duration * 1000); }
+        setInterval(spawnSparkle, 750);
+        function copyText(text, title = 'KOPYALANDI') { const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); showModal(title, text, '📋'); }
+        function copyRefCode() { copyText(currentActiveUser || 'demo'); }
+        function copyRefLink() { copyText(`https://robuxbirds.com/ref/${currentActiveUser || 'demo'}`); }
+        function copyToClipboard(text) { copyText(text); }
+        function approveWithdrawal() { showModal('BİLGİ', 'Onay işlemi backend admin akışına bağlanabilir.', 'ℹ️'); }
+        function rejectWithdrawal() { showModal('BİLGİ', 'Reddetme işlemi backend admin akışına bağlanabilir.', 'ℹ️'); }
+    </script>
+</body>
+</html>
