@@ -9,6 +9,12 @@ const PORT = process.env.PORT || 3000;
 const USERS_COLLECTION = 'users';
 const TASKS_COLLECTION = 'socialTasks';
 const WITHDRAWALS_COLLECTION = 'withdrawals';
+const APP_META_COLLECTION = 'appMeta';
+const CONFIG_COLLECTION = 'config';
+const ADMIN_USER_IDS = String(process.env.ADMIN_USER_IDS || '')
+  .split(',')
+  .map(item => item.trim().toLowerCase())
+  .filter(Boolean);
 const DAILY_ROBUX_LIMIT = 50;
 const ENERGY_DURATION_MS = 16200 * 1000; // 4.5 hours
 
@@ -47,7 +53,9 @@ let memoryMode = false;
 const memoryStore = {
   users: new Map(),
   socialTasks: new Map(DEFAULT_SOCIAL_TASKS.map((task, index) => [`default-${index + 1}`, { ...task, id: `default-${index + 1}` }])),
-  withdrawals: new Map()
+  withdrawals: new Map(),
+  appMeta: new Map(),
+  config: new Map()
 };
 
 function initFirebase() {
@@ -71,6 +79,60 @@ function initFirebase() {
 
 initFirebase();
 
+function isAdminUser(userId) {
+  return ADMIN_USER_IDS.includes(String(userId || '').trim().toLowerCase());
+}
+
+function createSessionToken() {
+  return crypto.randomBytes(32).toString('base64url');
+}
+
+function hashSessionToken(token) {
+  return crypto.createHash('sha256').update(String(token)).digest('hex');
+}
+
+function sessionTokenFrom(req) {
+  const auth = String(req.header('authorization') || '');
+  if (auth.toLowerCase().startsWith('bearer ')) return auth.slice(7).trim();
+  return String(req.header('x-session-token') || '').trim();
+}
+
+async function bootstrapDataStore() {
+  const timestamp = now();
+  const metaDoc = {
+    initializedAt: timestamp,
+    updatedAt: timestamp,
+    collections: [USERS_COLLECTION, TASKS_COLLECTION, WITHDRAWALS_COLLECTION, APP_META_COLLECTION, CONFIG_COLLECTION],
+    securityModel: 'server-only-firebase-admin'
+  };
+  const configDoc = { birds: BIRD_DB, dailyRobuxLimit: DAILY_ROBUX_LIMIT, energyDurationMs: ENERGY_DURATION_MS, updatedAt: timestamp };
+  const collectionSchemas = {
+    [USERS_COLLECTION]: { systemDoc: true, purpose: 'Player profiles and balances are auto-created on signup.', updatedAt: timestamp },
+    [WITHDRAWALS_COLLECTION]: { systemDoc: true, purpose: 'Withdrawal queue documents are auto-created on request.', updatedAt: timestamp }
+  };
+
+  if (memoryMode) {
+    memoryStore.appMeta.set('bootstrap', metaDoc);
+    memoryStore.config.set('game', configDoc);
+    memoryStore.users.set('_schema', collectionSchemas[USERS_COLLECTION]);
+    memoryStore.withdrawals.set('_schema', collectionSchemas[WITHDRAWALS_COLLECTION]);
+    DEFAULT_SOCIAL_TASKS.forEach((task, index) => {
+      const id = `default-${index + 1}`;
+      if (!memoryStore.socialTasks.has(id)) memoryStore.socialTasks.set(id, { ...task, id, systemSeed: true, createdAt: timestamp });
+    });
+    return;
+  }
+
+  await db.collection(APP_META_COLLECTION).doc('bootstrap').set(metaDoc, { merge: true });
+  await db.collection(CONFIG_COLLECTION).doc('game').set(configDoc, { merge: true });
+  await db.collection(USERS_COLLECTION).doc('_schema').set(collectionSchemas[USERS_COLLECTION], { merge: true });
+  await db.collection(WITHDRAWALS_COLLECTION).doc('_schema').set(collectionSchemas[WITHDRAWALS_COLLECTION], { merge: true });
+  await Promise.all(DEFAULT_SOCIAL_TASKS.map((task, index) => {
+    const id = `default-${index + 1}`;
+    return db.collection(TASKS_COLLECTION).doc(id).set({ ...task, systemSeed: true, createdAt: timestamp }, { merge: true });
+  }));
+}
+
 function hashPassword(password, salt = crypto.randomBytes(16).toString('hex')) {
   const hash = crypto.pbkdf2Sync(password, salt, 100000, 64, 'sha512').toString('hex');
   return `${salt}:${hash}`;
@@ -86,7 +148,8 @@ function userIdFrom(req) {
 }
 
 function publicUser(user) {
-  const { passwordHash, ...safe } = user;
+  const { passwordHash, sessionTokenHash, ...safe } = user;
+  safe.isAdmin = isAdminUser(user.id);
   return safe;
 }
 
@@ -99,6 +162,7 @@ function createDefaultUser(username, password, referredBy = '') {
     id: username.toLowerCase(),
     username,
     passwordHash: hashPassword(password),
+    sessionTokenHash: '',
     silver: 1500,
     robux: 0,
     eggs: 0,
@@ -131,7 +195,8 @@ function normalizeUser(user) {
     energyTimeRemaining: Number(user.energyTimeRemaining ?? ENERGY_DURATION_MS),
     lastEnergyCheck: Number(user.lastEnergyCheck || now()),
     dailyRobuxWithdrawn: Number(user.dailyRobuxWithdrawn || 0),
-    lastLimitResetTimestamp: Number(user.lastLimitResetTimestamp || now())
+    lastLimitResetTimestamp: Number(user.lastLimitResetTimestamp || now()),
+    sessionTokenHash: user.sessionTokenHash || ''
   };
   return accrueWarehouseEggs(resetDailyLimitIfNeeded(normalized));
 }
@@ -179,9 +244,12 @@ async function setUser(id, data) {
 async function requireUser(req, res, next) {
   try {
     const id = userIdFrom(req);
-    if (!id) return res.status(401).json({ error: 'Oturum bulunamadı.' });
+    const token = sessionTokenFrom(req);
+    if (!id || !token) return res.status(401).json({ error: 'Güvenli oturum bulunamadı. Lütfen tekrar giriş yapın.' });
     const user = await getUser(id);
-    if (!user) return res.status(401).json({ error: 'Kullanıcı bulunamadı.' });
+    if (!user || !user.sessionTokenHash || user.sessionTokenHash !== hashSessionToken(token)) {
+      return res.status(401).json({ error: 'Oturum doğrulanamadı. Lütfen tekrar giriş yapın.' });
+    }
     req.userId = id;
     req.user = normalizeUser(user);
     await setUser(id, req.user);
@@ -189,6 +257,11 @@ async function requireUser(req, res, next) {
   } catch (err) {
     next(err);
   }
+}
+
+function requireAdmin(req, res, next) {
+  if (!isAdminUser(req.userId)) return res.status(403).json({ error: 'Yönetici yetkisi gerekiyor.' });
+  next();
 }
 
 async function listSocialTasks() {
@@ -209,7 +282,7 @@ async function addSocialTask(task) {
 }
 
 async function getWithdrawals() {
-  if (memoryMode) return Array.from(memoryStore.withdrawals.values()).sort((a, b) => b.createdAt - a.createdAt);
+  if (memoryMode) return Array.from(memoryStore.withdrawals.values()).filter(item => !item.systemDoc).sort((a, b) => b.createdAt - a.createdAt);
   const snap = await db.collection(WITHDRAWALS_COLLECTION).orderBy('createdAt', 'desc').limit(50).get();
   return snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
@@ -269,9 +342,12 @@ app.post('/api/auth/login', async (req, res, next) => {
     const password = String(req.body.password || '').trim();
     const user = username ? await getUser(username) : null;
     if (!user || !verifyPassword(password, user.passwordHash)) return res.status(401).json({ error: 'Kullanıcı adı veya şifre hatalı.' });
+    const sessionToken = createSessionToken();
     const normalized = normalizeUser(user);
+    normalized.sessionTokenHash = hashSessionToken(sessionToken);
+    normalized.lastLoginAt = now();
     await setUser(username, normalized);
-    res.json({ user: publicUser(normalized) });
+    res.json({ user: publicUser(normalized), sessionToken });
   } catch (err) {
     next(err);
   }
@@ -425,7 +501,7 @@ app.post('/api/withdrawals', requireUser, async (req, res, next) => {
   }
 });
 
-app.post('/api/admin/social-tasks', requireUser, async (req, res, next) => {
+app.post('/api/admin/social-tasks', requireUser, requireAdmin, async (req, res, next) => {
   try {
     const title_TR = String(req.body.title_TR || '').trim();
     const title_EN = String(req.body.title_EN || '').trim();
@@ -446,6 +522,13 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || 'Sunucu hatası.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Robux Birds server running on http://localhost:${PORT}`);
-});
+bootstrapDataStore()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Robux Birds server running on http://localhost:${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Failed to bootstrap datastore:', err);
+    process.exit(1);
+  });

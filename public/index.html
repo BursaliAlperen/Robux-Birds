@@ -650,6 +650,7 @@
     <script>
         let currentLang = 'TR';
         let currentActiveUser = localStorage.getItem('birds_current_user') || null;
+        let sessionToken = localStorage.getItem('birds_session_token') || null;
         let currentTaskTab = 'daily';
         let currentConvertTab = 'egg-to-silver';
         let currentAdminTab = 'withdrawals';
@@ -691,7 +692,7 @@
         async function api(path, options = {}) {
             const response = await fetch(path, {
                 ...options,
-                headers: { 'Content-Type': 'application/json', ...(currentActiveUser ? { 'x-user-id': currentActiveUser } : {}), ...(options.headers || {}) }
+                headers: { 'Content-Type': 'application/json', ...(currentActiveUser ? { 'x-user-id': currentActiveUser } : {}), ...(sessionToken ? { Authorization: `Bearer ${sessionToken}` } : {}), ...(options.headers || {}) }
             });
             const data = await response.json().catch(() => ({}));
             if (!response.ok) throw new Error(data.error || 'Sunucu hatası.');
@@ -699,6 +700,10 @@
         }
 
         function applyServerPayload(payload) {
+            if (payload.sessionToken) {
+                sessionToken = payload.sessionToken;
+                localStorage.setItem('birds_session_token', sessionToken);
+            }
             if (payload.user) {
                 gameState = { ...gameState, ...payload.user };
                 txHistory = payload.user.txHistory || txHistory;
@@ -707,8 +712,8 @@
                 const badge = document.getElementById('farm-owner-badge');
                 if (badge) badge.innerText = `🐣 @${payload.user.username || currentActiveUser}`;
                 const adminBtn = document.getElementById('btn-menu-admin');
-                if (adminBtn) adminBtn.classList.toggle('hidden', !String(currentActiveUser).includes('admin'));
-                if (adminBtn && String(currentActiveUser).includes('admin')) adminBtn.classList.add('flex');
+                if (adminBtn) adminBtn.classList.toggle('hidden', !payload.user.isAdmin);
+                if (adminBtn && payload.user.isAdmin) adminBtn.classList.add('flex');
             }
             if (payload.birds) BIRD_DB = payload.birds;
             if (payload.socialTasks) SOCIAL_TASKS_DB = payload.socialTasks;
@@ -718,7 +723,7 @@
         }
 
         async function refreshState(silent = true) {
-            if (!currentActiveUser) return;
+            if (!currentActiveUser || !sessionToken) return;
             try { applyServerPayload(await api('/api/me')); }
             catch (err) { if (!silent) showModal('HATA', err.message, '❌'); }
         }
@@ -727,7 +732,7 @@
             try {
                 const config = await api('/api/config');
                 BIRD_DB = config.birds || [];
-                if (currentActiveUser) {
+                if (currentActiveUser && sessionToken) {
                     await refreshState(false);
                     document.getElementById('screen-auth').classList.add('hidden');
                     document.getElementById('screen-game').classList.remove('hidden');
@@ -832,7 +837,9 @@
         function logout() {
             closeMenu();
             currentActiveUser = null;
+            sessionToken = null;
             localStorage.removeItem('birds_current_user');
+            localStorage.removeItem('birds_session_token');
             clearInterval(refreshInterval);
             clearInterval(visualTickInterval);
             document.getElementById('screen-game').classList.add('hidden');
